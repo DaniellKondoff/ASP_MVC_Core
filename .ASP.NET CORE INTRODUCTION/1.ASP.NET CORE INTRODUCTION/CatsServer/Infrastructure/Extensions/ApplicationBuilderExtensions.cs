@@ -1,6 +1,7 @@
 ﻿using CatsServer.Handlers;
 using CatsServer.Middleware;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -35,6 +36,15 @@ namespace CatsServer.Infrastructure.Extensions
             }
 
             return builder;
+        }
+
+        public static void UseNotFoundHandler(this IApplicationBuilder builder)
+        {
+            builder.Run(async (context) =>
+            {
+                context.Response.StatusCode = 404;
+                await context.Response.WriteAsync("404 Page was not Found :/");
+            });
         }
     }
 }
