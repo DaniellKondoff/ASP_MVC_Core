@@ -1,0 +1,55 @@
+﻿@model IEnumerable<SalesWithCars>
+@{
+    ViewData["Title"] = "All Sales";
+}
+
+<h2>All Sales</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+           <th>
+               Car
+           </th>
+            <th>
+                Customer
+            </th>
+            <th>
+                Price
+            </th>
+            <th>
+                Price With Discount
+            </th>
+            <th>
+                Discount Percent
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var sale in Model)
+        {
+            <tr>
+                <td>
+                    <ul>
+                        <li>@sale.Car.Make</li>
+                        <li>@sale.Car.Model</li>
+                        <li>@(sale.Car.TravelledDistance / 1000) KM</li>
+                    </ul>
+                </td>
+                <td>
+                    @sale.Customer
+                </td>
+                <td>
+                    $@sale.Price.ToString("F2")
+                </td>
+                <td>
+                    $@sale.PriceWithDiscount.ToString("F2")
+                </td>
+                <td>
+                    @sale.Discount%
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+

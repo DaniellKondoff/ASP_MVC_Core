@@ -1,0 +1,36 @@
+﻿@model CustomerWithSales
+@{
+    ViewData["Title"] = "Customer";
+}
+
+<h2>Customer @Model.Name</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Name
+            </th>
+            <th>
+                Total Cars
+            </th>
+            <th>
+                Total Spent Money
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+                @Model.Name
+            </td>
+            <td>
+                @Model.TotalCars
+            </td>
+            <td>
+                $@Model.TotalSpentMoney.ToString("F2")
+            </td>
+        </tr>
+    </tbody>
+</table>
+

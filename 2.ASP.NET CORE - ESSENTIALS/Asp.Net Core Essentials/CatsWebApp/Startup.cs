@@ -29,7 +29,7 @@ namespace CatsWebApp
             services.AddDbContext<CatsDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddIdentity<ApplicationUser, IdentityRole>()
+            services.AddIdentity<User, IdentityRole>()
                 .AddEntityFrameworkStores<CatsDbContext>()
                 .AddDefaultTokenProviders();
 

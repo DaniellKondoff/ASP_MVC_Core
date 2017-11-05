@@ -8,7 +8,7 @@ using CatsWebApp.Models;
 
 namespace CatsWebApp.Data
 {
-    public class CatsDbContext : IdentityDbContext<ApplicationUser>
+    public class CatsDbContext : IdentityDbContext<User>
     {
         public CatsDbContext(DbContextOptions<CatsDbContext> options)
             : base(options)

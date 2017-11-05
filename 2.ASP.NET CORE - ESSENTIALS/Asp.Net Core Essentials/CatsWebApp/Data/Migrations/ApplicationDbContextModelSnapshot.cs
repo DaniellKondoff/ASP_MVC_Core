@@ -125,7 +125,7 @@ namespace CatsWebApp.Data.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("CatsWebApp.Models.ApplicationUser", b =>
+            modelBuilder.Entity("CatsWebApp.Models.User", b =>
                 {
                     b.Property<string>("Id");
 
@@ -184,7 +184,7 @@ namespace CatsWebApp.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("CatsWebApp.Models.ApplicationUser")
+                    b.HasOne("CatsWebApp.Models.User")
                         .WithMany("Claims")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -192,7 +192,7 @@ namespace CatsWebApp.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("CatsWebApp.Models.ApplicationUser")
+                    b.HasOne("CatsWebApp.Models.User")
                         .WithMany("Logins")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -205,7 +205,7 @@ namespace CatsWebApp.Data.Migrations
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("CatsWebApp.Models.ApplicationUser")
+                    b.HasOne("CatsWebApp.Models.User")
                         .WithMany("Roles")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
