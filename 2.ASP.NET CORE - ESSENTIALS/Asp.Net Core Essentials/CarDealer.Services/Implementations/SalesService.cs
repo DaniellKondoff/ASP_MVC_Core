@@ -9,7 +9,7 @@ using CarDealer.Services.Models.Cars;
 
 namespace CarDealer.Services.Implementations
 {
-    public class SalesService : ISaleService
+    public class SalesService : ISalesService
     {
         private readonly CarDealerDbContext db;
 
@@ -18,7 +18,7 @@ namespace CarDealer.Services.Implementations
             this.db = db;
         }
 
-        public IEnumerable<SalesWithCars> All(int? id, bool discounted, double? percentage)
+        public IEnumerable<SaleListModel> All(int? id, bool discounted, double? percentage)
         {
             var salesQuery = db.Sales.AsQueryable();
 
@@ -36,8 +36,9 @@ namespace CarDealer.Services.Implementations
             }
 
             var sales = salesQuery
-                .Select(s => new SalesWithCars
+                .Select(s => new SaleListModel
                 {
+                    Id = s.Id,
                     Car = new CarByMakeModel
                     {
                         Make = s.Car.Make,

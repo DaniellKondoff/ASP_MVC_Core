@@ -5,8 +5,10 @@ using System.Text;
 
 namespace CarDealer.Services.Models.Sales
 {
-    public class SalesWithCars
+    public class SaleListModel
     {
+        public int Id { get; set; }
+
         public CarByMakeModel Car { get; set; }
 
         public string Customer { get; set; }

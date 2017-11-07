@@ -31,7 +31,13 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
-                    <li><a asp-area="" asp-controller="Customers" asp-action="All">Customers</a></li>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Customers<span class="caret"></span></a>
+                        <ul class="dropdown-menu collapse">
+                            <li><a asp-area="" asp-controller="Customers" asp-action="All">All</a></li>
+                            <li><a asp-area="" asp-controller="Customers" asp-action="Create">Create</a></li>
+                        </ul>
+                    </li>
                     <li class="dropdown">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#">Sales<span class="caret"></span></a>
                         <ul class="dropdown-menu collapse">

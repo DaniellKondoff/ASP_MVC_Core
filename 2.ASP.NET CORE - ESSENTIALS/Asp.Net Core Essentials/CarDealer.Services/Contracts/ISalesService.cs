@@ -5,8 +5,8 @@ using System.Text;
 
 namespace CarDealer.Services.Contracts
 {
-    public interface ISaleService
+    public interface ISalesService
     {
-        IEnumerable<SalesWithCars> All(int? id, bool discounted, double? percentage);
+        IEnumerable<SaleListModel> All(int? id, bool discounted, double? percentage);
     }
 }

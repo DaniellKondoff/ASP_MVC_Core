@@ -1,0 +1,19 @@
+﻿@model IEnumerable<SaleListModel>
+@{
+    ViewData["Title"] = $"{Model.First().Car.Model} Sale";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+@foreach (var car in Model)
+{
+    <h3>@car.Customer</h3>
+
+    <p>@car.Car.Make</p>
+
+    <p>@(car.Car.TravelledDistance /1000) KM</p>
+
+    <p>@car.Discount.ToPercentage()</p>
+
+    <p>@car.PriceWithDiscount.ToPrice()</p>
+}

@@ -1,4 +1,4 @@
-﻿@model IEnumerable<SalesWithCars>
+﻿@model IEnumerable<SaleListModel>
 @{
     ViewData["Title"] = "All Sales";
 }
@@ -40,13 +40,16 @@
                     @sale.Customer
                 </td>
                 <td>
-                    $@sale.Price.ToString("F2")
+                    @sale.Price.ToPrice()
                 </td>
                 <td>
-                    $@sale.PriceWithDiscount.ToString("F2")
+                    @sale.PriceWithDiscount.ToPrice()
                 </td>
                 <td>
-                    @sale.Discount%
+                    @sale.Discount.ToPercentage()
+                </td>
+                <td>
+                    <a class="btn btn-sm btn-default" href="/sales/@sale.Id">More Details</a>
                 </td>
             </tr>
         }

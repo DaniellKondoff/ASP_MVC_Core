@@ -1,4 +1,5 @@
 ﻿using CarDealer.Services.Models.Customers;
+using System;
 using System.Collections.Generic;
 
 namespace CarDealer.Services.Contracts
@@ -7,6 +8,12 @@ namespace CarDealer.Services.Contracts
     {
         IEnumerable<CustomerModel> OrderedCustomers(OrderDirection order);
 
-        CustomerWithSales FindWithSales(int id);
+        CustomerTotalSalesModel TotalSalesById(int id);
+
+        void Create(string name, DateTime birthDate, bool isYoungDriver);
+
+        CustomerModel ById(int id);
+        void Edit(int id, string name, DateTime birthDate, bool isYoungDriver);
+        bool Exists(int id);
     }
 }

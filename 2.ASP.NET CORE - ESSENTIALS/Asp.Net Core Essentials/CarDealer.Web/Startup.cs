@@ -1,17 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using CarDealer.Data;
+using CarDealer.Data.Models;
+using CarDealer.Web.Infrastructure.Extensions;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using CarDealer.Data;
-using CarDealer.Data.Models;
-using CarDealer.Services.Contracts;
-using CarDealer.Services.Implementations;
 
 namespace CarDealer.Web
 {
@@ -33,10 +28,7 @@ namespace CarDealer.Web
                 .AddEntityFrameworkStores<CarDealerDbContext>()
                 .AddDefaultTokenProviders();
 
-            services.AddTransient<ICustomerService,CustomerService>();
-            services.AddTransient<ICarService,CarService>();
-            services.AddTransient<ISupplierService, SupplierService>();
-            services.AddTransient<ISaleService, SalesService>();
+            services.AddDomainServices();
 
             services.AddMvc();
         }

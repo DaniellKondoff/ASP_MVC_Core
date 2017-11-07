@@ -1,9 +1,9 @@
-﻿@model CustomerWithSales
+﻿@model CustomerTotalSalesModel
 @{
-    ViewData["Title"] = "Customer";
+    ViewData["Title"] = $"Customer {Model.Name}";
 }
 
-<h2>Customer @Model.Name</h2>
+<h2>@ViewData["Title"]</h2>
 
 <table class="table">
     <thead>
@@ -25,7 +25,7 @@
                 @Model.Name
             </td>
             <td>
-                @Model.TotalCars
+                @Model.BoughtCars.Count()
             </td>
             <td>
                 $@Model.TotalSpentMoney.ToString("F2")

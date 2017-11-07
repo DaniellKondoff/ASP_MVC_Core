@@ -1,20 +1,17 @@
-﻿using CarDealer.Services.Contracts;
-using CarDealer.Services.Models.Sales;
-using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace CarDealer.Web.Controllers
+﻿namespace CarDealer.Web.Controllers
 {
-    
+    using CarDealer.Services.Contracts;
+    using CarDealer.Services.Models.Sales;
+    using Microsoft.AspNetCore.Mvc;
+    using System.Collections.Generic;
+    using Infrastructure.Extensions;
+
     [Route("Sales")]
     public class SalesController : Controller
     {
-        private readonly ISaleService saleService;
+        private readonly ISalesService saleService;
 
-        public SalesController(ISaleService saleService)
+        public SalesController(ISalesService saleService)
         {
             this.saleService = saleService;
         }
@@ -26,9 +23,9 @@ namespace CarDealer.Web.Controllers
         }
 
         [Route("{id}")]
-        public IActionResult All(int id)
+        public IActionResult Details(int id)
         {
-            return View(this.GetSalesWithCarsModel(id,false));
+            return this.ViewOrNotFound(this.GetSalesWithCarsModel(id, false));
         }
 
         [Route("discounted")]
@@ -40,15 +37,15 @@ namespace CarDealer.Web.Controllers
         [Route("discounted/{percent}")]
         public IActionResult Discounted(double percent)
         {
-            return this.View("All", this.GetSalesWithCarsModel(null, true, percent));
+            return this.ViewOrNotFound(this.GetSalesWithCarsModel(null, true, percent), "All");
         }
 
-        private IEnumerable<SalesWithCars> GetSalesWithCarsModel(int? id, bool discounted)
+        private IEnumerable<SaleListModel> GetSalesWithCarsModel(int? id, bool discounted)
         {
             return this.saleService.All(id,discounted, null);
         }
 
-        private IEnumerable<SalesWithCars> GetSalesWithCarsModel(int? id, bool discounted, double percentage)
+        private IEnumerable<SaleListModel> GetSalesWithCarsModel(int? id, bool discounted, double percentage)
         {
             return this.saleService.All(id, discounted, percentage);
         }

@@ -1,8 +1,10 @@
-﻿using CarDealer.Services.Contracts;
+﻿using CarDealer.Data;
+using CarDealer.Data.Models;
+using CarDealer.Services.Contracts;
+using CarDealer.Services.Models.Cars;
+using CarDealer.Services.Models.Customers;
 using System;
 using System.Collections.Generic;
-using CarDealer.Services.Models.Customers;
-using CarDealer.Data;
 using System.Linq;
 
 namespace CarDealer.Services.Implementations
@@ -39,6 +41,7 @@ namespace CarDealer.Services.Implementations
             return customersQuery
                .Select(c => new CustomerModel
                {
+                   Id=c.Id,
                    Name = c.Name,
                    BirthDate = c.BirthDate,
                    IsYoungDriver = c.IsYoungDriver
@@ -46,18 +49,69 @@ namespace CarDealer.Services.Implementations
                .ToList();
         }
 
-        public CustomerWithSales FindWithSales(int id)
+        public CustomerTotalSalesModel TotalSalesById(int id)
         {
             return db.Customers
                 .Where(c => c.Id == id)
-                .Select(c => new CustomerWithSales
+                .Select(c => new CustomerTotalSalesModel
                 {
                     Name = c.Name,
-                    TotalCars = c.Sales.Count,
-                    TotalSpentMoney = c.Sales
-                    .Sum(s => s.Car.Parts.Sum(p=>p.Part.Price))
+                    IsYoungDriver = c.IsYoungDriver,
+                    BoughtCars = c.Sales.Select(s => new SalesModel
+                    {
+                        Price = s.Car.Parts.Sum(p=>p.Part.Price),
+                        Discount = s.Discount
+                    })
                 })
                 .FirstOrDefault();
+        }
+
+        public void Create(string name, DateTime birthDate, bool isYoungDriver)
+        {
+            var customer = new Customer
+            {
+                Name = name,
+                BirthDate = birthDate,
+                IsYoungDriver = isYoungDriver
+            };
+
+            this.db.Customers.Add(customer);
+            this.db.SaveChanges();
+        }
+
+        public CustomerModel ById(int id)
+        {
+            return this.db
+                .Customers
+                .Where(c => c.Id == id)
+                .Select(c => new CustomerModel
+                {
+                    Id = c.Id,
+                    Name = c.Name,
+                    BirthDate = c.BirthDate,
+                    IsYoungDriver = c.IsYoungDriver
+                })
+                .FirstOrDefault();
+        }
+
+        public void Edit(int id, string name, DateTime birthDate, bool isYoungDriver)
+        {
+            var customer = db.Customers.Find(id);
+
+            if (customer == null)
+            {
+                return;
+            }
+            customer.Name = name;
+            customer.BirthDate = birthDate;
+            customer.IsYoungDriver = isYoungDriver;
+
+            this.db.SaveChanges();       
+        }
+
+        public bool Exists(int id)
+        {
+            return db.Customers.Any(c => c.Id == id);
         }
     }
 }
