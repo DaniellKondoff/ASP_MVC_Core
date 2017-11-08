@@ -1,10 +1,12 @@
-﻿using CarDealer.Services.Models;
+﻿using CarDealer.Services.Models.Suppliers;
 using System.Collections.Generic;
 
 namespace CarDealer.Services.Contracts
 {
     public interface ISupplierService
     {
-        IEnumerable<SupplierModel> All(bool isImporter);
+        IEnumerable<SupplierListingModel> AllListing(bool isImporter);
+
+        IEnumerable<SupplierModel> All();
     }
 }

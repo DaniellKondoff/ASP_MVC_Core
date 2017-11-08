@@ -1,4 +1,4 @@
-﻿using CarDealer.Services.Models;
+﻿using CarDealer.Services.Models.Suppliers;
 using System.Collections.Generic;
 
 namespace CarDealer.Web.Models.SuppliersModels
@@ -7,6 +7,6 @@ namespace CarDealer.Web.Models.SuppliersModels
     {
         public string Type { get; set; }
 
-        public IEnumerable<SupplierModel> Suppliers { get; set; }
+        public IEnumerable<SupplierListingModel> Suppliers { get; set; }
     }
 }
