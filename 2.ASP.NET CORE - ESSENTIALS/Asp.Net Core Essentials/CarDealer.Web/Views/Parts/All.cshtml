@@ -47,6 +47,9 @@
             <th>
                 Supplier
             </th>
+            <th>
+
+            </th>
         </tr>
     </thead>
     <tbody>
@@ -64,6 +67,10 @@
                 </td>
                 <td>
                     @part.SupplierName
+                </td>
+                <td>
+                    <a class="btn btn-danger" href="/parts/delete/@part.Id">Delete</a>
+                    <a class="btn btn-warning" href="/parts/edit/@part.Id">Edit</a>
                 </td>
             </tr>
         }

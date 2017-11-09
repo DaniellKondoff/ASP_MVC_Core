@@ -8,6 +8,12 @@ namespace CarDealer.Services.Contracts
         IEnumerable<PartListingModel> All(int page = 1, int pageSize = 10);
 
         int Total();
+
         void Create(string name, decimal price, double quantity, int supplierId);
+
+        void Delete(int id);
+
+        PartEditModel GetById(int id);
+        void Edit(int id, decimal price, double quantity);
     }
 }

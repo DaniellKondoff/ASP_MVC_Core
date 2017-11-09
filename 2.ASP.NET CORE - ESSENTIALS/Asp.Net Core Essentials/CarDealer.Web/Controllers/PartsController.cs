@@ -58,5 +58,47 @@ namespace CarDealer.Web.Controllers
                 Value = s.Id.ToString()
             });
         }
+
+        public IActionResult Delete(int id) => View(id);
+
+       
+        public IActionResult Destroy(int id)
+        {
+            this.partService.Delete(id);
+
+            return RedirectToAction(nameof(All));
+        }
+
+        public IActionResult Edit(int id)
+        {
+            var part = this.partService.GetById(id);
+
+            if (part == null)
+            {
+                return NotFound();
+            }
+
+            return View(new PartFormModel
+            {
+                Name = part.Name,
+                Price = part.Price,
+                Quantity = part.Quantity,
+                IsEdit = true
+            });
+        }
+
+        [HttpPost]
+        public IActionResult Edit(int id,PartFormModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                model.IsEdit = true;
+                return this.View(model);
+            }
+
+            this.partService.Edit(id, model.Price, model.Quantity);
+
+            return RedirectToAction(nameof(All));
+        }
     }
 }

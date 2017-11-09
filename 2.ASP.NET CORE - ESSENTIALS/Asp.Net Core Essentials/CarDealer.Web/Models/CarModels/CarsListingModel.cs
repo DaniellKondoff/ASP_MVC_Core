@@ -1,11 +1,14 @@
-﻿using CarDealer.Services.Models.Parts;
+﻿using CarDealer.Services.Models.Cars;
+using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
-namespace CarDealer.Web.Models.PartsModel
+namespace CarDealer.Web.Models.CarModels
 {
-    public class PartPageListingModel
+    public class CarsListingModel
     {
-        public IEnumerable<PartListingModel> Parts { get; set; }
+        public IEnumerable<CarWIthPartsModel> AllCars { get; set; }
 
         public int CurrentPage { get; set; }
 

@@ -12,6 +12,7 @@ namespace CarDealer.Web.Controllers
     public class CarsController : Controller
     {
         private readonly ICarService carService;
+        private const int PageSize = 25;
 
         public CarsController(ICarService carService)
         {
@@ -31,9 +32,36 @@ namespace CarDealer.Web.Controllers
         }
 
         [Route("parts",Order = 1)]
-        public IActionResult Parts()
+        public IActionResult Parts(int page =1)
         {
-            return this.View(this.carService.WithParts());
+
+            return this.View( new CarsListingModel
+            {
+                AllCars = this.carService.WithParts(page, PageSize),
+                CurrentPage = page,
+                TotalPages = (int)Math.Ceiling(this.carService.Total() / (double)PageSize)
+            }
+            );
+        }
+
+        [Route(nameof(Create))]
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [Route(nameof(Create))]
+        public IActionResult Create(CarFormModel carModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View();
+            }
+
+            this.carService.Create(carModel.Make, carModel.Model, carModel.TravelledDistance);
+
+            return RedirectToAction(nameof(Parts));
         }
     }
 }

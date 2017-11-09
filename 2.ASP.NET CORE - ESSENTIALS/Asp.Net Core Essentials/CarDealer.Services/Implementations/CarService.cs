@@ -5,6 +5,7 @@ using System.Linq;
 using CarDealer.Services.Models.Cars;
 using CarDealer.Data;
 using CarDealer.Services.Models.Parts;
+using CarDealer.Data.Models;
 
 namespace CarDealer.Services.Implementations
 {
@@ -33,10 +34,28 @@ namespace CarDealer.Services.Implementations
                
         }
 
-        public IEnumerable<CarWIthPartsModel> WithParts()
+        public void Create(string make, string model, long travelledDistance)
+        {
+            var car = new Car
+            {
+                Make = make,
+                Model = model,
+                TravelledDistance = travelledDistance
+            };
+
+            this.db.Cars.Add(car);
+            this.db.SaveChanges();
+        }
+
+        public int Total() => this.db.Cars.Count();
+
+        public IEnumerable<CarWIthPartsModel> WithParts(int page = 1, int pageSize = 10)
         {
             return this.db
                 .Cars
+                .OrderBy(c=>c.Make)
+                .Skip((page -1) * pageSize)
+                .Take(pageSize)
                 .Select(c => new CarWIthPartsModel
                 {
                     Make = c.Make,

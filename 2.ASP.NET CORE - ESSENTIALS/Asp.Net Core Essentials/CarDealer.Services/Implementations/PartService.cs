@@ -49,6 +49,46 @@ namespace CarDealer.Services.Implementations
             db.SaveChanges();
         }
 
+        public void Delete(int id)
+        {
+            var part = db.Parts.Find(id);
+
+            if (part == null)
+            {
+                return;
+            }
+
+            this.db.Parts.Remove(part);
+            this.db.SaveChanges();
+        }
+
+        public void Edit(int id, decimal price, double quantity)
+        {
+            var part = this.db.Parts.Find(id);
+
+            if (part == null)
+            {
+                return;
+            }
+            part.Price = price;
+            part.Quantity = quantity;
+
+            db.SaveChanges();
+        }
+
+        public PartEditModel GetById(int id)
+        {
+            return this.db.Parts
+                .Where(p => p.Id == id)
+                .Select(p => new PartEditModel
+                {
+                    Name = p.Name,
+                    Price = p.Price,
+                    Quantity = p.Quantity
+                })
+                .FirstOrDefault();
+        }
+
         public int Total() => this.db.Parts.Count();
        
     }
