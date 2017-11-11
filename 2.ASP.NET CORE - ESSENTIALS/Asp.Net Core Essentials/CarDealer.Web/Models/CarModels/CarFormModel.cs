@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace CarDealer.Web.Models.CarModels
 {
@@ -12,8 +14,13 @@ namespace CarDealer.Web.Models.CarModels
         [MaxLength(100)]
         public string Model { get; set; }
 
-        [Display(Name ="Travelled Distance")]
+        [Display(Name = "Travelled Distance")]
         [Range(0, long.MaxValue, ErrorMessage = "{2} must be Positive Number")]
         public long TravelledDistance { get; set; }
+
+        public IEnumerable<int> SelectedParts { get; set; }
+
+        [Display(Name ="Parts")]
+        public IEnumerable<SelectListItem> AllParts { get; set; }
     }
 }

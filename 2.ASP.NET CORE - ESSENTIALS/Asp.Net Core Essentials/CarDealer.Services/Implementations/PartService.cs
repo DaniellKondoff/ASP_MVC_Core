@@ -17,7 +17,20 @@ namespace CarDealer.Services.Implementations
             this.db = db;
         }
 
-        public IEnumerable<PartListingModel> All(int page = 1, int pageSize=10)
+        public IEnumerable<PartsShortModel> All()
+        {
+            return this.db
+                .Parts
+                .OrderBy(p=>p.Name)
+                .Select(p => new PartsShortModel
+                {
+                    Id = p.Id,
+                    Name = p.Name
+                })
+                .ToList();
+        }
+
+        public IEnumerable<PartListingModel> AllListings(int page = 1, int pageSize=10)
         {
             return this.db
                 .Parts

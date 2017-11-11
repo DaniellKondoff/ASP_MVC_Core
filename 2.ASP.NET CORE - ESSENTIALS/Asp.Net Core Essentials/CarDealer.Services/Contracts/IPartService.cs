@@ -5,7 +5,9 @@ namespace CarDealer.Services.Contracts
 {
     public interface IPartService
     {
-        IEnumerable<PartListingModel> All(int page = 1, int pageSize = 10);
+        IEnumerable<PartListingModel> AllListings(int page = 1, int pageSize = 10);
+
+        IEnumerable<PartsShortModel> All();
 
         int Total();
 
@@ -14,6 +16,7 @@ namespace CarDealer.Services.Contracts
         void Delete(int id);
 
         PartEditModel GetById(int id);
+
         void Edit(int id, decimal price, double quantity);
     }
 }

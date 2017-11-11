@@ -34,14 +34,24 @@ namespace CarDealer.Services.Implementations
                
         }
 
-        public void Create(string make, string model, long travelledDistance)
+        public void Create(string make, string model, long travelledDistance, IEnumerable<int> parts)
         {
+            var existingPartsId = this.db.Parts
+                .Where(p => parts.Contains(p.Id))
+                .Select(p => p.Id)
+                .ToList();
+
             var car = new Car
             {
                 Make = make,
                 Model = model,
                 TravelledDistance = travelledDistance
             };
+
+            foreach (var partId in existingPartsId)
+            {
+                car.Parts.Add(new PartCars { PartId = partId });
+            }
 
             this.db.Cars.Add(car);
             this.db.SaveChanges();

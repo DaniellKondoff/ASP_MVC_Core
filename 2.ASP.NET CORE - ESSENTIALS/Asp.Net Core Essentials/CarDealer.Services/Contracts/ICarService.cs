@@ -10,7 +10,8 @@ namespace CarDealer.Services.Contracts
         IEnumerable<CarByMakeModel> ByMake(string make);
 
         IEnumerable<CarWIthPartsModel> WithParts(int page = 1, int pageSize = 10);
-        void Create(string make, string model, long travelledDistance);
+
+        void Create(string make, string model, long travelledDistance, IEnumerable<int> parts);
 
         int Total();
     }
