@@ -1,0 +1,53 @@
+﻿@model IEnumerable<LogsListingServiceModel>
+@{
+    ViewData["Title"] = "All";
+}
+<form method="get" asp-action="All">
+    <div>
+        Find By Name <input type="text" name="SearchString" value="@ViewData["currentFilter"]" />
+        <input type="submit" value="Search" class="btn btn-primary" />
+        <a href="/logs/clear" class="btn btn-warning">Clear All Logs</a>
+
+    </div>
+</form>
+
+<div>
+</div>
+
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>
+                User
+            </th>
+            <th>
+                Operation
+            </th>
+            <th>
+                Modified Table
+            </th>
+            <th>
+                Time
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var log in Model)
+        {
+            <tr>
+                <td>
+                    @log.UserName
+                </td>
+                <td>
+                    @log.OperationType
+                </td>
+                <td>
+                    @log.ModifiedTable
+                </td>
+                <td>
+                    @log.ModifiedDate
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

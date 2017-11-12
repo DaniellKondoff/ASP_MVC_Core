@@ -33,7 +33,7 @@ namespace CarDealer.Web.Controllers
 
         public IActionResult Create() => View(new PartFormModel
         {
-            Suppliers = this.GetSupplierListItems()
+            Suppliers = this.GetSupplierListItems()        
         });
 
         [HttpPost]

@@ -1,0 +1,21 @@
+﻿@model SupplierFormViewModel
+<form method="post">
+    <h2>@(!Model.IsForEdit ? "Create" : "Edit")Supplier</h2>
+    <hr />
+    <div class="form-group">
+        <label asp-for="Name"></label>
+        <input asp-for="Name" class="form-control" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="IsImporter"></label>
+        <input asp-for="IsImporter" />
+        <span asp-validation-for="IsImporter" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Parts"></label>
+        <select asp-for="SelectedParts" asp-items="Model.Parts" multiple class="form-control parts-select"></select>
+        <small>* Hold "Ctrl" to select multiple parts</small>
+    </div>
+    <input type="submit" class="btn btn-success" value="@(!Model.IsForEdit ? "Add" : "Edit") Supplier" />
+</form>

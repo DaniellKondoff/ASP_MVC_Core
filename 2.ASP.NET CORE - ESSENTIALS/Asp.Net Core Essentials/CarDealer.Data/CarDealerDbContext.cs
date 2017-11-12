@@ -17,6 +17,8 @@ namespace CarDealer.Data
 
         public DbSet<Supplier> Suppliers { get; set; }
 
+        public DbSet<Log> Logs { get; set; }
+
 
         public CarDealerDbContext(DbContextOptions<CarDealerDbContext> options)
             : base(options)

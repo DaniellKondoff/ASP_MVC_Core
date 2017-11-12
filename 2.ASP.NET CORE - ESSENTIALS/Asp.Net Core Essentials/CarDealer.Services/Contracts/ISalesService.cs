@@ -8,5 +8,7 @@ namespace CarDealer.Services.Contracts
     public interface ISalesService
     {
         IEnumerable<SaleListModel> All(int? id, bool discounted, double? percentage);
+
+        IEnumerable<SaleBasicViewModel> AllBasics();
     }
 }

@@ -1,5 +1,7 @@
-﻿using CarDealer.Services.Contracts;
+﻿using CarDealer.Data.Models.Enums;
+using CarDealer.Services.Contracts;
 using CarDealer.Web.Models.CarModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
@@ -14,12 +16,15 @@ namespace CarDealer.Web.Controllers
     {
         private readonly ICarService carService;
         private readonly IPartService partService;
+        private readonly ILogService logService;
         private const int PageSize = 25;
+        private const string CarTable = "Cars";
 
-        public CarsController(ICarService carService, IPartService partService)
+        public CarsController(ICarService carService, IPartService partService, ILogService logService)
         {
             this.carService = carService;
             this.partService = partService;
+            this.logService = logService;
         }
 
         [Route("{make}",Order = 2)]
@@ -48,6 +53,7 @@ namespace CarDealer.Web.Controllers
         }
 
         [Route(nameof(Create))]
+        [Authorize]
         public IActionResult Create()
         {
             return View(new CarFormModel
@@ -57,6 +63,7 @@ namespace CarDealer.Web.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         [Route(nameof(Create))]
         public IActionResult Create(CarFormModel carModel)
         {
@@ -67,6 +74,8 @@ namespace CarDealer.Web.Controllers
             }
 
             this.carService.Create(carModel.Make, carModel.Model, carModel.TravelledDistance, carModel.SelectedParts) ;
+
+            this.logService.Create(this.User.Identity.Name, Operation.Add, CarTable, DateTime.UtcNow);
 
             return RedirectToAction(nameof(Parts));
         }

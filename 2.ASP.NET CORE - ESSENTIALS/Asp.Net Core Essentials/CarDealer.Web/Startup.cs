@@ -24,7 +24,15 @@ namespace CarDealer.Web
             services.AddDbContext<CarDealerDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddIdentity<User, IdentityRole>()
+            services
+                .AddIdentity<User, IdentityRole>(opt=>
+                {
+                    opt.Password.RequireDigit = false;
+                    opt.Password.RequiredLength = 3;
+                    opt.Password.RequireUppercase = false;
+                    opt.Password.RequireLowercase = false;
+                    opt.Password.RequireNonAlphanumeric = false;
+                })
                 .AddEntityFrameworkStores<CarDealerDbContext>()
                 .AddDefaultTokenProviders();
 

@@ -12,9 +12,10 @@ using System;
 namespace CarDealer.Data.Migrations
 {
     [DbContext(typeof(CarDealerDbContext))]
-    partial class CarDealerDbContextModelSnapshot : ModelSnapshot
+    [Migration("20171112202655_InsertLogTable2")]
+    partial class InsertLogTable2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -66,9 +67,7 @@ namespace CarDealer.Data.Migrations
 
                     b.Property<int>("LogOperation");
 
-                    b.Property<DateTime>("ModifiedOn");
-
-                    b.Property<string>("ModifiedTable");
+                    b.Property<DateTime>("ModifyiedOn");
 
                     b.Property<string>("UserName");
 

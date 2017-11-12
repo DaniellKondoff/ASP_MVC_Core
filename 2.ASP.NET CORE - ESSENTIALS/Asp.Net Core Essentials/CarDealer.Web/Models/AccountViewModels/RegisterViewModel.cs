@@ -9,6 +9,12 @@ namespace CarDealer.Web.Models.AccountViewModels
     public class RegisterViewModel
     {
         [Required]
+        [Display(Name = "Username")]
+        [MinLength(3)]
+        [MaxLength(50)]
+        public string UserName { get; set; }
+
+        [Required]
         [EmailAddress]
         [Display(Name = "Email")]
         public string Email { get; set; }

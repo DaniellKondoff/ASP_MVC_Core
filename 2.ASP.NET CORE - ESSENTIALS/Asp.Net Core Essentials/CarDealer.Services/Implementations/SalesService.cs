@@ -54,5 +54,17 @@ namespace CarDealer.Services.Implementations
 
             return sales;
         }
+
+        public IEnumerable<SaleBasicViewModel> AllBasics()
+        {
+            return this.db
+                .Sales
+                .Select(c => new SaleBasicViewModel
+                {
+                    Id = c.Id,
+                    Discount = c.Discount
+                })
+                .ToList();
+        }
     }
 }

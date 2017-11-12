@@ -18,6 +18,21 @@ namespace CarDealer.Services.Implementations
             this.db = db;
         }
 
+        public IEnumerable<CarsBasicModel> AllBasic()
+        {
+            return this.db
+                .Cars
+                .OrderBy(c => c.Make)
+                .ThenBy(c => c.Model)
+                .Select(c => new CarsBasicModel
+                {
+                    Id = c.Id,
+                    Name = $"{c.Make} {c.Model}"
+                })
+                .ToList()
+                .Distinct();
+        }
+
         public IEnumerable<CarByMakeModel> ByMake(string make)
         {
             return db.Cars
