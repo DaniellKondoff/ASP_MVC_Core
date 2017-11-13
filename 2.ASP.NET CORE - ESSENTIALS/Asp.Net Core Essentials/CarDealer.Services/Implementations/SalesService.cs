@@ -6,6 +6,9 @@ using CarDealer.Services.Models.Sales;
 using CarDealer.Data;
 using System.Linq;
 using CarDealer.Services.Models.Cars;
+using CarDealer.Data.Models;
+using Microsoft.EntityFrameworkCore;
+using CarDealer.Services.Models.Parts;
 
 namespace CarDealer.Services.Implementations
 {
@@ -65,6 +68,37 @@ namespace CarDealer.Services.Implementations
                     Discount = c.Discount
                 })
                 .ToList();
+        }
+
+        public SaleFinilizeServiceModel ReviewSale(int customerId, int carId, int discountId)
+        {
+            var customer = this.db.Customers.Find(customerId);
+            var car = this.db.Cars.Where(c => c.Id == carId)
+                .Select(c => new CarWIthPartsModel
+                {
+                    Model = c.Model,
+                    Make = c.Make,
+                    Parts = c.Parts.Select(p => new PartModel
+                    {
+                        Name = p.Part.Name,
+                        Price = p.Part.Price
+                    })
+                })
+                .FirstOrDefault();
+            
+            var discount = this.db.Sales.Find(discountId);
+
+            var sale = new SaleFinilizeServiceModel
+            {
+                CustomerName = customer.Name,
+                CarName = $"{car.Model} {car.Make}",
+                Discount = discount.Discount,
+                CarPrice = car.Parts.Sum(p=>p.Price)
+            };
+
+            sale.FinalCarPrice = sale.CarPrice - (decimal)(sale.Discount);
+
+            return sale;
         }
     }
 }

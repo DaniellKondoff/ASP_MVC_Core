@@ -19,10 +19,12 @@ namespace CarDealer.Services.Implementations
             this.db = db;
         }
 
-        public IEnumerable<LogsListingServiceModel> AllListing()
+        public IEnumerable<LogsListingServiceModel> AllListing(int page = 1, int pageSize = 10)
         {
             return this.db.Logs
                 .OrderByDescending(l => l.ModifiedOn)
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
                 .Select(l => new LogsListingServiceModel
                 {
                     UserName = l.UserName,
@@ -54,5 +56,8 @@ namespace CarDealer.Services.Implementations
             this.db.Logs.Add(log);
             this.db.SaveChanges();
         }
+
+        public int Total() => this.db.Logs.Count();
+        
     }
 }

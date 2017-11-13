@@ -10,5 +10,7 @@ namespace CarDealer.Services.Contracts
         IEnumerable<SaleListModel> All(int? id, bool discounted, double? percentage);
 
         IEnumerable<SaleBasicViewModel> AllBasics();
+
+        SaleFinilizeServiceModel ReviewSale(int customerId, int carId, int discountId);
     }
 }

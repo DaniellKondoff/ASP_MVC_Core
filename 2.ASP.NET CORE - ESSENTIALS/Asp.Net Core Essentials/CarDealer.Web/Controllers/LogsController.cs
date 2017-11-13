@@ -1,4 +1,5 @@
 ﻿using CarDealer.Services.Contracts;
+using CarDealer.Web.Models.LogsViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -11,6 +12,7 @@ namespace CarDealer.Web.Controllers
     [Authorize]
     public class LogsController : Controller
     {
+        private const int PageSize = 20;
         private readonly ILogService logService;
 
         public LogsController(ILogService logService)
@@ -18,18 +20,23 @@ namespace CarDealer.Web.Controllers
             this.logService = logService;
         }
 
-        public IActionResult All(string searchString)
+        public IActionResult All(string searchString, int page = 1)
         {
             ViewData["currentFilter"] = searchString;
 
-            var allLogs = this.logService.AllListing();
+            var allLogs = this.logService.AllListing(page, PageSize);
 
             if (!String.IsNullOrEmpty(searchString))
             {
                 allLogs = allLogs.Where(l => l.UserName.ToLower().Contains(searchString.ToLower()));
             }
 
-            return View(allLogs);
+            return View(new LogsListingViewModel
+            {
+                AllLogs = allLogs,
+                CurrentPage = page,
+                TotalPages = (int)Math.Ceiling(this.logService.Total() / (double)PageSize)
+            });
         }
 
         public IActionResult Clear()

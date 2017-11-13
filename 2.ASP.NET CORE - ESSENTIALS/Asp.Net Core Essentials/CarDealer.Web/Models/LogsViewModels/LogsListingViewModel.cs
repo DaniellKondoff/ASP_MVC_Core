@@ -1,11 +1,11 @@
-﻿using CarDealer.Services.Models.Cars;
+﻿using CarDealer.Services.Models.Logs;
 using System.Collections.Generic;
 
-namespace CarDealer.Web.Models.CarModels
+namespace CarDealer.Web.Models.LogsViewModels
 {
-    public class CarsListingModel
+    public class LogsListingViewModel
     {
-        public IEnumerable<CarWIthPartsModel> AllCars { get; set; }
+        public IEnumerable<LogsListingServiceModel> AllLogs { get; set; }
 
         public int CurrentPage { get; set; }
 

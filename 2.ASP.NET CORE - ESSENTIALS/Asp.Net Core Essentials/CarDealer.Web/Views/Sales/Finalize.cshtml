@@ -1,0 +1,42 @@
+﻿@model SaleFinilizeServiceModel
+@{
+    ViewData["Title"] = "Review Sale";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<div class="row">
+    <div class="col-md-4">
+      <form method="post">
+          <div class="form-group">
+              <label asp-for="CustomerName"></label>
+              <input asp-for="CustomerName" min="1" class="form-control" />
+              <span asp-validation-for="CustomerName" class="text-danger"></span>
+          </div>
+          <div class="form-group">
+              <label asp-for="CarName"></label>
+              <input asp-for="CarName" min="1" class="form-control" />
+              <span asp-validation-for="CarName" class="text-danger"></span>
+          </div>
+          <div class="form-group">
+              <label asp-for="Discount"></label>
+              <input asp-for="Discount" min="1" class="form-control" />
+              <span asp-validation-for="Discount" class="text-danger"></span>
+          </div>
+          <div class="form-group">
+              <label asp-for="CarPrice"></label>
+              <input asp-for="CarPrice" min="1" class="form-control" />
+              <span asp-validation-for="CarPrice" class="text-danger"></span>
+          </div>
+          <div class="form-group">
+              <label asp-for="FinalCarPrice"></label>
+              <input asp-for="FinalCarPrice" min="1" class="form-control" />
+              <span asp-validation-for="FinalCarPrice" class="text-danger"></span>
+          </div>
+
+          <input type="submit" class="btn btn-success" value="Finalize" />
+          <a href="/sales/create" class="btn btn-default">Cancel</a>
+      </form>
+    </div>
+</div>
+

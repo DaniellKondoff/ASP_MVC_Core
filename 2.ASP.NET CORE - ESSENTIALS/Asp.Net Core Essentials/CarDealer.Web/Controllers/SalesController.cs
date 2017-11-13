@@ -47,14 +47,29 @@
             });
         }
 
-        [Route(nameof(Create))]
-        [HttpPost]
+        [Route(nameof(Finalize))]
         [Authorize]
-        public IActionResult Create(CreateSaleViewModel model)
+        public IActionResult Finalize(int customerId, int carId, int discountId)
         {
+            var saleModel = this.saleService.ReviewSale(customerId, carId, discountId);
             this.logService.Create(this.User.Identity.Name, Operation.Add, SaleTable, DateTime.UtcNow);
 
-            return View();
+            return View(saleModel);
+        }
+
+        [HttpPost]
+        [Route(nameof(Finalize))]
+        [Authorize]
+        public IActionResult Finalize(SaleFinilizeServiceModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+
+            }
+            
+            //ToDo
+            return RedirectToAction(nameof(All));
         }
 
         [Route("{id}")]
