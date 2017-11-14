@@ -11,6 +11,7 @@
     using Microsoft.AspNetCore.Mvc.Rendering;
     using CarDealer.Data.Models.Enums;
     using System;
+    using CarDealer.Web.Infrastructure.Filters;
 
     [Route("Sales")]
     public class SalesController : Controller
@@ -19,14 +20,12 @@
         private readonly ISalesService saleService;
         private readonly ICustomerService customerService;
         private readonly ICarService carService;
-        private readonly ILogService logService;
 
-        public SalesController(ISalesService saleService, ICustomerService customerService, ICarService carService, ILogService logService)
+        public SalesController(ISalesService saleService, ICustomerService customerService, ICarService carService)
         {
             this.saleService = saleService;
             this.customerService = customerService;
             this.carService = carService;
-            this.logService = logService;
         }
 
         [Route("")]
@@ -47,14 +46,12 @@
             });
         }
 
-        [Route(nameof(Finalize))]
         [Authorize]
+        [Route(nameof(Finalize))]
+        [Log(Operation.Add, SaleTable)]
         public IActionResult Finalize(int customerId, int carId, int discountId)
         {
             var saleModel = this.saleService.ReviewSale(customerId, carId, discountId);
-
-            this.logService.Create(this.User.Identity.Name, Operation.Add, SaleTable, DateTime.UtcNow);
-
             return View(saleModel);
         }
 

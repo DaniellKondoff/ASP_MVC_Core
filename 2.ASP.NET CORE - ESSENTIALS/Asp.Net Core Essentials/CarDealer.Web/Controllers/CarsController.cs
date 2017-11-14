@@ -1,5 +1,6 @@
 ﻿using CarDealer.Data.Models.Enums;
 using CarDealer.Services.Contracts;
+using CarDealer.Web.Infrastructure.Filters;
 using CarDealer.Web.Models.CarModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -64,6 +65,7 @@ namespace CarDealer.Web.Controllers
 
         [HttpPost]
         [Authorize]
+        [Log(Operation.Add,CarTable)]
         [Route(nameof(Create))]
         public IActionResult Create(CarFormModel carModel)
         {
@@ -74,8 +76,6 @@ namespace CarDealer.Web.Controllers
             }
 
             this.carService.Create(carModel.Make, carModel.Model, carModel.TravelledDistance, carModel.SelectedParts) ;
-
-            this.logService.Create(this.User.Identity.Name, Operation.Add, CarTable, DateTime.UtcNow);
 
             return RedirectToAction(nameof(Parts));
         }

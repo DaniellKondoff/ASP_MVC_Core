@@ -1,5 +1,6 @@
 ﻿using CarDealer.Data.Models.Enums;
 using CarDealer.Services.Contracts;
+using CarDealer.Web.Infrastructure.Filters;
 using CarDealer.Web.Models.SuppliersModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -16,15 +17,13 @@ namespace CarDealer.Web.Controllers
     {
         private readonly ISupplierService supplierService;
         private readonly IPartService partService;
-        private readonly ILogService logService;
         private const string SupplierView = "Suppliers";
         private const string SupplierTable = "Suppliers";
 
-        public SuppliersController(ISupplierService supplierService, IPartService partService, ILogService logService)
+        public SuppliersController(ISupplierService supplierService, IPartService partService)
         {
             this.supplierService = supplierService;
             this.partService = partService;
-            this.logService = logService;
         }
 
         public IActionResult All()
@@ -55,6 +54,7 @@ namespace CarDealer.Web.Controllers
 
         [HttpPost]
         [Authorize]
+        [Log(Operation.Add, SupplierTable)]
         public IActionResult Create(SupplierFormViewModel model)
         {
             if (!ModelState.IsValid)
@@ -64,9 +64,6 @@ namespace CarDealer.Web.Controllers
             }
 
             this.supplierService.Create(model.Name, model.IsImporter, model.SelectedParts);
-
-            this.logService.Create(this.User.Identity.Name, Operation.Add, SupplierTable, DateTime.UtcNow);
-
             return RedirectToAction(nameof(All));
         }
 
@@ -91,6 +88,7 @@ namespace CarDealer.Web.Controllers
 
         [HttpPost]
         [Authorize]
+        [Log(Operation.Edit, SupplierTable)]
         public IActionResult Edit(int id, EditSupplierViewModel model)
         {
             if (!ModelState.IsValid)
@@ -100,9 +98,6 @@ namespace CarDealer.Web.Controllers
             }
 
             this.supplierService.Edit(id, model.Name, model.IsImporter, model.SelectedParts);
-
-            this.logService.Create(this.User.Identity.Name, Operation.Edit, SupplierTable, DateTime.UtcNow);
-
             return RedirectToAction(nameof(All));
         }
 
@@ -110,12 +105,10 @@ namespace CarDealer.Web.Controllers
         public IActionResult Delete(int id) => View(id);
 
         [Authorize]
+        [Log(Operation.Delete, SupplierTable)]
         public IActionResult Destroy(int id)
         {
             this.supplierService.Delete(id);
-
-            this.logService.Create(this.User.Identity.Name, Operation.Delete, SupplierTable, DateTime.UtcNow);
-
             return RedirectToAction(nameof(All));
         }
 
