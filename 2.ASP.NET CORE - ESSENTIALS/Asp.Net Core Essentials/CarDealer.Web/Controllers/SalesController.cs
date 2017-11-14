@@ -52,6 +52,7 @@
         public IActionResult Finalize(int customerId, int carId, int discountId)
         {
             var saleModel = this.saleService.ReviewSale(customerId, carId, discountId);
+
             this.logService.Create(this.User.Identity.Name, Operation.Add, SaleTable, DateTime.UtcNow);
 
             return View(saleModel);
@@ -65,10 +66,9 @@
             if (!ModelState.IsValid)
             {
                 return View(model);
-
             }
-            
-            //ToDo
+
+            this.saleService.Create(model.CarId,model.CustomerId,model.Discount);
             return RedirectToAction(nameof(All));
         }
 

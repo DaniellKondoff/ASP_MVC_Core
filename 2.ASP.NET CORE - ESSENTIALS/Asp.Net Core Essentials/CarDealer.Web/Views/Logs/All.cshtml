@@ -11,7 +11,7 @@
 
 <form method="get" asp-action="All">
     <div>
-        Find By Name <input type="text" name="SearchString" value="@ViewData["currentFilter"]" />
+        Find By Name <input type="text" name="search" value="@Model.Search" />
         <input type="submit" value="Search" class="btn btn-primary" />
         <a href="/logs/clear" class="btn btn-warning">Clear All Logs</a>
 
@@ -59,19 +59,22 @@
     </tbody>
 </table>
 
+@{ 
+    var searchQuery = Model.Search != null ? "&search=" + Model.Search : string.Empty;
+}
 <ul class="pagination">
     <li class="page-item @previouseDisabled">
-        <a class="page-link @previouseDisabled" href="/cars/parts?page=@Model.PreviousPage" aria-label="Previous">
+        <a class="page-link @previouseDisabled" href="/logs/all?page=@Model.PreviousPage@searchQuery" aria-label="Previous">
             <span aria-hidden="true">&laquo;</span>
             <span class="sr-only">Previous</span>
         </a>
     </li>
     @for (int i = 1; i <= Model.TotalPages; i++)
     {
-        <li class="page-item @(Model.CurrentPage == i ?"active" : string.Empty)"><a class="page-link" href="/cars/parts?page=@i">@i</a></li>
+        <li class="page-item @(Model.CurrentPage == i ?"active" : string.Empty)"><a class="page-link" href="/logs/all?page=@i">@i</a></li>
     }
     <li class="page-item @nextDisabled">
-        <a class="page-link @nextDisabled" href="/cars/parts?page=@Model.NextPage" aria-label="Next">
+        <a class="page-link @nextDisabled" href="/logs/all?page=@Model.NextPage@searchQuery" aria-label="Next">
             <span aria-hidden="true">&raquo;</span>
             <span class="sr-only">Next</span>
         </a>

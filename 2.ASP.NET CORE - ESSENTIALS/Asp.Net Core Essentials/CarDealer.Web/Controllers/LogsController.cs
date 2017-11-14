@@ -12,7 +12,7 @@ namespace CarDealer.Web.Controllers
     [Authorize]
     public class LogsController : Controller
     {
-        private const int PageSize = 20;
+        private const int PageSize = 2;
         private readonly ILogService logService;
 
         public LogsController(ILogService logService)
@@ -20,22 +20,25 @@ namespace CarDealer.Web.Controllers
             this.logService = logService;
         }
 
-        public IActionResult All(string searchString, int page = 1)
+        public IActionResult All(string search, int page = 1)
         {
-            ViewData["currentFilter"] = searchString;
+            var allLogs = this.logService.AllListing();
 
-            var allLogs = this.logService.AllListing(page, PageSize);
-
-            if (!String.IsNullOrEmpty(searchString))
+            if (!string.IsNullOrEmpty(search))
             {
-                allLogs = allLogs.Where(l => l.UserName.ToLower().Contains(searchString.ToLower()));
+                allLogs = allLogs.Where(l => l.UserName.ToLower().Contains(search.ToLower()));
             }
+
+            allLogs = allLogs
+                .Skip((page - 1) * PageSize)
+                .Take(PageSize);
 
             return View(new LogsListingViewModel
             {
                 AllLogs = allLogs,
                 CurrentPage = page,
-                TotalPages = (int)Math.Ceiling(this.logService.Total() / (double)PageSize)
+                TotalPages = (int)Math.Ceiling(this.logService.Total() / (double)PageSize),
+                Search = search
             });
         }
 

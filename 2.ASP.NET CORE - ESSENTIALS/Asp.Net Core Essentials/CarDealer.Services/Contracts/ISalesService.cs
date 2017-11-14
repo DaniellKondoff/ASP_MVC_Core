@@ -12,5 +12,6 @@ namespace CarDealer.Services.Contracts
         IEnumerable<SaleBasicViewModel> AllBasics();
 
         SaleFinilizeServiceModel ReviewSale(int customerId, int carId, int discountId);
+        void Create(int carId, int customerId, double discount);
     }
 }

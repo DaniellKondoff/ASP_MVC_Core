@@ -10,7 +10,7 @@ namespace CarDealer.Services.Contracts
     {
         void Create(string userName, Operation operationType, string table, DateTime modifiedDate);
 
-        IEnumerable<LogsListingServiceModel> AllListing(int page = 1, int pageSize = 10);
+        IEnumerable<LogsListingServiceModel> AllListing();
 
         void Clear();
 

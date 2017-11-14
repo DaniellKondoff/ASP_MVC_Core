@@ -70,6 +70,24 @@ namespace CarDealer.Services.Implementations
                 .ToList();
         }
 
+        public void Create(int carId, int customerId, double discount)
+        {
+            if ((carId > 0 && carId <= this.db.Cars.Count()) 
+                && (customerId > 0 && customerId <= this.db.Customers.Count()))
+            {
+                var sale = new Sale
+                {
+                    CarId = carId,
+                    CustomerId = customerId,
+                    Discount = discount
+                };
+
+                this.db.Sales.Add(sale);
+                this.db.SaveChanges();
+            }
+           
+        }
+
         public SaleFinilizeServiceModel ReviewSale(int customerId, int carId, int discountId)
         {
             var customer = this.db.Customers.Find(customerId);
@@ -90,13 +108,16 @@ namespace CarDealer.Services.Implementations
 
             var sale = new SaleFinilizeServiceModel
             {
+                CustomerId = customer.Id,
                 CustomerName = customer.Name,
+                CarId = carId,
                 CarName = $"{car.Model} {car.Make}",
+                DiscountId= discountId,
                 Discount = discount.Discount,
                 CarPrice = car.Parts.Sum(p=>p.Price)
             };
 
-            sale.FinalCarPrice = sale.CarPrice - (decimal)(sale.Discount);
+            sale.FinalCarPrice = sale.CarPrice * (1 - (decimal)(sale.Discount));
 
             return sale;
         }
