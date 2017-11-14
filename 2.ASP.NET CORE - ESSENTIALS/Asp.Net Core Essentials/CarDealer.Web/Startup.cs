@@ -4,6 +4,7 @@ using CarDealer.Web.Infrastructure.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -38,7 +39,10 @@ namespace CarDealer.Web
 
             services.AddDomainServices();
 
-            services.AddMvc();
+            services.AddMvc(opt=>
+            {
+                opt.Filters.Add<ValidateAntiForgeryTokenAttribute>();
+            });
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
