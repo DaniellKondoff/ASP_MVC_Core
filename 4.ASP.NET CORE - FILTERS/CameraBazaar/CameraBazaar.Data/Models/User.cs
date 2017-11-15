@@ -8,5 +8,6 @@ namespace CameraBazaar.Data.Models
 {
     public class User : IdentityUser
     {
+        public IEnumerable<Camera> Cameras { get; set; } = new HashSet<Camera>();
     }
 }

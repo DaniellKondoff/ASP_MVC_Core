@@ -5,6 +5,13 @@
     <UserSecretsId>aspnet-CameraBazaar.Web-BC4499BF-70E4-4D27-8E48-C6369DA4B37C</UserSecretsId>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="Extensions\**" />
+    <Content Remove="Extensions\**" />
+    <EmbeddedResource Remove="Extensions\**" />
+    <None Remove="Extensions\**" />
+  </ItemGroup>
+
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.0" />
@@ -20,10 +27,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\CameraBazaar.Data\CameraBazaar.Data.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Extensions\" />
   </ItemGroup>
 
 </Project>

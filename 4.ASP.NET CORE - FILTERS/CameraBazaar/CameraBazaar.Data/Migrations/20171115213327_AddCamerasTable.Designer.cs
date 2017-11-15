@@ -12,9 +12,10 @@ using System;
 namespace CameraBazaar.Data.Migrations
 {
     [DbContext(typeof(CameraBazaarDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20171115213327_AddCamerasTable")]
+    partial class AddCamerasTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
