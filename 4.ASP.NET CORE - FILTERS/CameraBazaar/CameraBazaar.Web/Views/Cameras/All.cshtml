@@ -5,15 +5,19 @@
 
 <h2>@ViewData["Title"]</h2>
 
-<div>
+<div class="row">
     <hr />
-    <div class="row">
         @foreach (var camera in Model)
         {
-            <div class="col-md-3" style="border:solid">
+            <div class="col col-md-12">
+                <img src="@camera.ImageUrl" alt="no camera" height="80" width="80"/>
                 <p>@camera.Make @camera.Model</p>
+                <p>@camera.Price.ToString("f2")</p>
+                <p>@(camera.IsInStock ? "IN STOCK" : "OUT OF STOCK")</p>
+                <a class="btn btn-default" href="/cameras/details/@camera.Id">Details</a>
             </div>
+            <br />
+            <hr />
         }
-    </div>
 </div>
 

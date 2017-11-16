@@ -12,8 +12,8 @@ using System;
 namespace CameraBazaar.Data.Migrations
 {
     [DbContext(typeof(CameraBazaarDbContext))]
-    [Migration("20171115213327_AddCamerasTable")]
-    partial class AddCamerasTable
+    [Migration("20171116210555_Init")]
+    partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -24,7 +24,7 @@ namespace CameraBazaar.Data.Migrations
 
             modelBuilder.Entity("CameraBazaar.Data.Models.Camera", b =>
                 {
-                    b.Property<string>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("Description")

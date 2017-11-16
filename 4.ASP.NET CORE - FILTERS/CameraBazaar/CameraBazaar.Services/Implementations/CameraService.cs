@@ -65,10 +65,37 @@ namespace CameraBazaar.Services.Implementations
                 Description = description,
                 ImageUrl = imageUrl,
                 UserId = userId
+                
             };
 
             this.db.Add(camera);
             this.db.SaveChanges();
+        }
+
+        public DetailsCameraServiceModel Details(int id)
+        {
+            return db.Cameras
+                .Where(c => c.Id == id)
+                .Select(c => new DetailsCameraServiceModel
+                {
+                    Make = c.Make,
+                    Model = c.Model,
+                    Price = c.Price,
+                    Quantity = c.Quantity,
+                    MinShutterSpeed = c.MinShutterSpeed,
+                    MaxShutterSpeed = c.MaxShutterSpeed,
+                    MinISO = c.MinISO,
+                    MaxISO = c.MaxISO,
+                    IsFullFrame = c.IsFullFrame,
+                    VideoResolution = c.VideoResolution,
+                    LightMetering = c.LightMetering,
+                    Description = c.Description,
+                    ImageUrl = c.ImageUrl,
+                    UserId = c.UserId,
+                    Username = c.User.UserName,
+                    IsInStock = (c.Quantity > 0) ? true : false
+                })
+                .FirstOrDefault();
         }
     }
 }

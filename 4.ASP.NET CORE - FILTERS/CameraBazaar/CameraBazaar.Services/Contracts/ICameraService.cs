@@ -23,5 +23,7 @@ namespace CameraBazaar.Services.Contracts
             string userId);
 
         IEnumerable<AllListingServiceModel> AllListing();
+
+        DetailsCameraServiceModel Details(int id);
     }
 }

@@ -1,0 +1,25 @@
+﻿@model DetailsCameraServiceModel
+@{
+    ViewData["Title"] = "Details";
+}
+
+<div class="row">
+    <div class="col-lg-12">
+        <p>@Model.Make @Model.Model - $@Model.Price.ToString("F2") - @(Model.IsInStock ? "IN STOCK" : "OUT OF STOCK")</p>
+        <p><a href="/user/details/@Model.UserId">@Model.Username</a></p>
+        <div class="col-lg-12">
+            <img src="@Model.ImageUrl" width="200" height="200" />
+            <br />
+            <br />
+            <p><label asp-for="IsFullFrame"></label>: @Model.IsFullFrame</p>
+            <p><label asp-for="MinShutterSpeed"></label>: @Model.MinShutterSpeed</p>
+            <p><label asp-for="MaxShutterSpeed"></label>: @Model.MaxShutterSpeed</p>
+            <p><label asp-for="MinISO"></label>: @Model.MinISO</p>
+            <p><label asp-for="MaxISO"></label>: @Model.MaxISO</p>
+            <p><label asp-for="VideoResolution"></label>: @Model.VideoResolution</p>
+            <p><label asp-for="LightMetering"></label>: @Model.LightMetering</p>
+            <p><label asp-for="Description"></label>: @Model.Description</p>
+        </div>
+    </div>
+</div>
+

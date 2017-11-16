@@ -12,7 +12,7 @@ using System;
 namespace CameraBazaar.Data.Migrations
 {
     [DbContext(typeof(CameraBazaarDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    partial class CameraBazaarDbContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
@@ -23,7 +23,7 @@ namespace CameraBazaar.Data.Migrations
 
             modelBuilder.Entity("CameraBazaar.Data.Models.Camera", b =>
                 {
-                    b.Property<string>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("Description")

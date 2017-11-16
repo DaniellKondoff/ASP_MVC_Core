@@ -54,5 +54,12 @@ namespace CameraBazaar.Web.Controllers
 
             return this.View(allCameras);
         }
+
+        public IActionResult Details(int id)
+        {
+            var cameraDetails = this.cameraService.Details(id);
+
+            return View(cameraDetails);
+        }
     }
 }
