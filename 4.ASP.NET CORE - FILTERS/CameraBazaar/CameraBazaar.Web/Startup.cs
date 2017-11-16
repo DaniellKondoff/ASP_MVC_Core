@@ -34,6 +34,8 @@ namespace CameraBazaar.Web
                 .AddEntityFrameworkStores<CameraBazaarDbContext>()
                 .AddDefaultTokenProviders();
 
+            services.AddDomainServices();
+
             services.AddMvc();
         }
 
@@ -55,6 +57,7 @@ namespace CameraBazaar.Web
 
             app.UseStaticFiles();
 
+            
             app.UseAuthentication();
 
             app.UseMvcWithDefaultRoute();

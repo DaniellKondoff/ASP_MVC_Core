@@ -8,7 +8,6 @@
 <div class="row">
     <div class="col-md-4">
         <form method="post">
-            <h4>Create a new camera.</h4>
             <hr />
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
@@ -64,10 +63,21 @@
             </div>
             <div class="form-group">
                 <label asp-for="LightMetering"></label>
-                <input type="checkbox" name="LightMetering" value="@((int)LightMetering.Spot)" /> Spot
-                <input type="checkbox" name="LightMetering" value="@((int)LightMetering.CenterWeighted)" /> Center-Weighted
-                <input type="checkbox" name="LightMetering" value="@((int)LightMetering.Evaluative)" /> Evaluative
+                @foreach (var enumValue in Enum.GetValues(typeof(LightMetering)).Cast<LightMetering>())
+                {
+                    <input type="checkbox" name="@nameof(LightMetering)" value="@((int)enumValue)" /> @: @enumValue.ToDisplayName();
+                }
                 <span asp-validation-for="LightMetering" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Description"></label>
+                <textarea asp-for="Description" class="form-control"></textarea>
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ImageUrl"></label>
+                <input asp-for="ImageUrl" class="form-control" />
+                <span asp-validation-for="ImageUrl" class="text-danger"></span>
             </div>
             <button type="submit" class="btn btn-primary">Add Camera</button>
         </form>
