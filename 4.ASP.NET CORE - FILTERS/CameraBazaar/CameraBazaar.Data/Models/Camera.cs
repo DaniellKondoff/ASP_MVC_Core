@@ -5,7 +5,7 @@ namespace CameraBazaar.Data.Models
 {
     public class Camera
     {
-        public string Id { get; set; }
+        public int Id { get; set; }
 
         public CameraMakeType Make { get; set; }
 

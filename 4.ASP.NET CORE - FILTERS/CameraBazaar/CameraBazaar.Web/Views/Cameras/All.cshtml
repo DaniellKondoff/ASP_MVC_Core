@@ -1,0 +1,19 @@
+﻿@model IEnumerable<AllListingServiceModel>
+@{
+    ViewData["Title"] = "All Cameras";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<div>
+    <hr />
+    <div class="row">
+        @foreach (var camera in Model)
+        {
+            <div class="col-md-3" style="border:solid">
+                <p>@camera.Make @camera.Model</p>
+            </div>
+        }
+    </div>
+</div>
+

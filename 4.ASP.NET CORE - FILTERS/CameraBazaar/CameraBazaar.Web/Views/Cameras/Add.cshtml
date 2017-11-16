@@ -27,17 +27,17 @@
             </div>
             <div class="form-group">
                 <label asp-for="Quantity"></label>
-                <input asp-for="Quantity" type="number" class="form-control" />
+                <input asp-for="Quantity" min="0" max="100" class="form-control" />
                 <span asp-validation-for="Quantity" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="MinShutterSpeed"></label>
-                <input asp-for="MinShutterSpeed" class="form-control" />
+                <input asp-for="MinShutterSpeed" min="0" max="30" class="form-control" />
                 <span asp-validation-for="MinShutterSpeed" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="MaxShutterSpeed"></label>
-                <input asp-for="MaxShutterSpeed" class="form-control" />
+                <input asp-for="MaxShutterSpeed" min="2000" max="8000" class="form-control" />
                 <span asp-validation-for="MaxShutterSpeed" class="text-danger"></span>
             </div>
             <div class="form-group">

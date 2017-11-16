@@ -1,4 +1,5 @@
 ﻿using CameraBazaar.Data.Models.Enums;
+using CameraBazaar.Web.Infrastructure.Validation.Cameras;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
@@ -10,6 +11,7 @@ namespace CameraBazaar.Web.Models.CamerasViewModels
 
         [Required]
         [MaxLength(100)]
+        [RegularExpression(@"^[A-Z]+[\d]*\-*$",ErrorMessage = "Model must contain only uppercase letters, digits and dash(“-“).")]
         public string Model { get; set; }
 
         public decimal Price { get; set; }
@@ -50,6 +52,7 @@ namespace CameraBazaar.Web.Models.CamerasViewModels
         [Required]
         [StringLength(2000,MinimumLength = 10)]
         [Display(Name = "Image URL")]
+        [URL]
         public string ImageUrl { get; set; }
     }
 }

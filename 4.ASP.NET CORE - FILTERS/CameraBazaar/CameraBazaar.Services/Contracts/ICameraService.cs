@@ -1,4 +1,5 @@
 ﻿using CameraBazaar.Data.Models.Enums;
+using CameraBazaar.Services.Models.Cameras;
 using System.Collections.Generic;
 
 namespace CameraBazaar.Services.Contracts
@@ -20,5 +21,7 @@ namespace CameraBazaar.Services.Contracts
             string description,
             string imageUrl,
             string userId);
+
+        IEnumerable<AllListingServiceModel> AllListing();
     }
 }

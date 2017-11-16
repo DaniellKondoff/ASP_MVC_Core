@@ -47,5 +47,12 @@ namespace CameraBazaar.Web.Controllers
 
             return RedirectToAction(nameof(HomeController.Index), "Home");
         }
+
+        public IActionResult All()
+        {
+            var allCameras = this.cameraService.AllListing();
+
+            return this.View(allCameras);
+        }
     }
 }
