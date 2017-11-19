@@ -25,7 +25,7 @@ namespace CameraBazaar.Web.Infrastructure.Filters
             var logService = context.HttpContext.RequestServices.GetService<ILogService>();
             var logData = $"{dateTime} - {ipAddress} - {user} - {controller}.{action}";
 
-            if (context.ExceptionHandled)
+            if (context.Exception != null)
             {
 
             }

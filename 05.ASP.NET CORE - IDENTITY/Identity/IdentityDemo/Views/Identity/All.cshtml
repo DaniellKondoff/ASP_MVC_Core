@@ -1,0 +1,39 @@
+﻿@model IEnumerable<ListUserViewModel>
+
+@{
+    ViewData["Title"] = "All Users";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <h2 class="text-success">@TempData["SuccessMessage"]</h2>
+}
+
+<div>
+    <a class="btn btn-primary" href="/identity/create">Create User</a>
+</div>
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>UserName</th>
+            <th>E-mail</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in Model)
+        {
+            <tr>
+                <td>@user.UserName</td>
+                <td>@user.Email</td>
+                <td>
+                    <a class="btn btn-primary" href="/identity/roles/@user.Id">Roles</a>
+                    <a class="btn btn-primary" href="/identity/changepassword/@user.Id">Change Password</a>
+                    <a class="btn btn-primary" href="/identity/delete/@user.Id">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

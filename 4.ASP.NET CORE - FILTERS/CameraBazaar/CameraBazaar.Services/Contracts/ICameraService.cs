@@ -25,5 +25,11 @@ namespace CameraBazaar.Services.Contracts
         IEnumerable<AllListingServiceModel> AllListing();
 
         DetailsCameraServiceModel Details(int id);
+
+        EditCameraServiceModel GetById(int id);
+
+        void Edit(int id, CameraMakeType make, string model, decimal price, int quantity, int minShutterSpeed, int maxShutterSpeed, MinIsoType minISO, int maxISO, bool isFullFrame, string videoResolution, LightMetering lightMetering, string description, string imageUrl);
+
+        void Delete(int id);
     }
 }

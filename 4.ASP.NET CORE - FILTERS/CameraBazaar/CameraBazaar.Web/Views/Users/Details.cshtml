@@ -1,0 +1,53 @@
+﻿@model UserDetailsListingModel
+@{
+    ViewData["Title"] = "User Details";
+}
+<h2>
+    @Model.Username
+    <a class="btn btn-primary" href="/users/edit/@Model.Id">Edit Profile</a>
+</h2>
+
+@{ 
+    var camerasCount = Model.CamerasCollection.Count();
+}
+<div class="row">
+    <div class="col-lg-12">
+        <p><label asp-for="Email"></label>: @Model.Email</p>
+        <p><label asp-for="Phone"></label>: @Model.Phone</p>
+        <p><label asp-for="Cameras"></label>: @Model.Cameras</p>
+    </div>
+    <h2>Cameras:</h2>
+    @if(camerasCount == 0)
+    {
+        <div class="col-lg-12">
+            The user is not seiling any cameras. Go to <a href="/home/index">home page</a> to
+            find more offers of otter users
+        </div>
+    }
+    else
+    {
+        @foreach (var camera in Model.CamerasCollection)
+        {
+            <div class="col-lg-12" id="cameraDetails">
+                <div class="col-lg-3">
+                    <img src="@camera.ImageUrl" alt="No Camera image" width="200" height="200" />
+                </div>
+                <div class="col-lg-3">
+                    <p>@camera.Make @camera.Model</p>
+                    <br />
+                    <a href="/cameras/details/@camera.Id">Details</a>
+                </div>
+                <div class="col-lg-3">
+                    <p>@camera.Price</p>
+                    <p>@(camera.IsInStock ? "In Stock" : "Out of Stock")</p>
+                </div>
+                <div class="col-lg-3">
+                   <p><a class="btn btn-primary" href="/cameras/edit/@camera.Id">Edit</a></p>
+                    <p><a class="btn btn-warning" href="/cameras/delete/@camera.Id">Delete</a></p>
+                </div>
+            </div>
+            <br />
+        }
+
+    }
+</div>
