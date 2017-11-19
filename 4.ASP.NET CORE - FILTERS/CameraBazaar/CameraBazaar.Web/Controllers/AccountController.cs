@@ -1,4 +1,5 @@
 ﻿using CameraBazaar.Data.Models;
+using CameraBazaar.Services.Contracts;
 using CameraBazaar.Web.Models.AccountViewModels;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
@@ -18,14 +19,17 @@ namespace CameraBazaar.Web.Controllers
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
         private readonly ILogger _logger;
+        private readonly IUserService userService;
 
         public AccountController(
             UserManager<User> userManager,
             SignInManager<User> signInManager,
+            IUserService userService,
             ILogger<AccountController> logger)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            this.userService = userService;
             _logger = logger;
         }
 
@@ -57,6 +61,8 @@ namespace CameraBazaar.Web.Controllers
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");
+                    var userForLogging =_userManager.FindByNameAsync(model.Username);
+                    this.userService.WriteLastLogin(userForLogging.Result.Id);
                     return RedirectToLocal(returnUrl);
                 }
                 if (result.RequiresTwoFactor)

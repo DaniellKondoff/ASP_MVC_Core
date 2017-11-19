@@ -1,6 +1,7 @@
 ﻿using CameraBazaar.Data.Models;
 using CameraBazaar.Services.Contracts;
 using CameraBazaar.Services.Models.Cameras;
+using CameraBazaar.Web.Infrastructure.Filters;
 using CameraBazaar.Web.Models.CamerasViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;

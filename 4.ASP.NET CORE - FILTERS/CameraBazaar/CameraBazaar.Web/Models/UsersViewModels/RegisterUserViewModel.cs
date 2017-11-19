@@ -29,5 +29,7 @@ namespace CameraBazaar.Web.Models.UsersViewModels
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
+
+        public DateTime LastLogin { get; set; }
     }
 }

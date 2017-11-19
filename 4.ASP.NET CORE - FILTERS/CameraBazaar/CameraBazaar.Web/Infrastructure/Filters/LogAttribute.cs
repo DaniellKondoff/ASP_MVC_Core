@@ -1,37 +1,33 @@
-﻿using CameraBazaar.Services.Contracts;
-using Microsoft.AspNetCore.Mvc.Filters;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.AspNetCore.Mvc.Filters;
 using System;
+using System.IO;
 
 namespace CameraBazaar.Web.Infrastructure.Filters
 {
     public class LogAttribute : ActionFilterAttribute
     {
-        private string controller;
-        private string action;
-
-        public LogAttribute(string controller, string action)
-        {
-            this.controller = controller;
-            this.action = action;
-        }
-
         public override void OnActionExecuted(ActionExecutedContext context)
         {
-            var dateTime = DateTime.UtcNow.ToLongDateString();
-            var ipAddress = context.HttpContext.Connection.LocalIpAddress;
-            var user = context.HttpContext.User.Identity.IsAuthenticated ? context.HttpContext.User.Identity.Name : "Anonymos";
-
-            var logService = context.HttpContext.RequestServices.GetService<ILogService>();
-            var logData = $"{dateTime} - {ipAddress} - {user} - {controller}.{action}";
-
-            if (context.Exception != null)
+            using (var writer = new StreamWriter("logs.txt",true))
             {
+                var dateTime = DateTime.UtcNow;
+                var ipAddress = context.HttpContext.Connection.RemoteIpAddress;
+                var user = context.HttpContext.User?.Identity?.Name ?? "Anonymos";
+                var controller = context.Controller.GetType().Name;
+                var action = context.RouteData.Values["action"];
 
+                var logData = $"{dateTime} - {ipAddress} - {user} - {controller}.{action}";
+
+                if (context.Exception != null)
+                {
+                    var exceptionType = context.Exception.GetType().Name;
+                    var exceptyionMessage = context.Exception.Message;
+                    logData = $"[!] {logData} - {exceptionType} - {exceptyionMessage}";
+                }
+
+                writer.WriteLine(logData);
             }
-            logService.Create(logData);
+            
         }
-
-        
     }
 }

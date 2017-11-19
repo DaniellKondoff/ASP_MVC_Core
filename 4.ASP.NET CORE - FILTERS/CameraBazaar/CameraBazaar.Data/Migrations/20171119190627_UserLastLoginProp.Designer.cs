@@ -12,9 +12,10 @@ using System;
 namespace CameraBazaar.Data.Migrations
 {
     [DbContext(typeof(CameraBazaarDbContext))]
-    partial class CameraBazaarDbContextModelSnapshot : ModelSnapshot
+    [Migration("20171119190627_UserLastLoginProp")]
+    partial class UserLastLoginProp
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

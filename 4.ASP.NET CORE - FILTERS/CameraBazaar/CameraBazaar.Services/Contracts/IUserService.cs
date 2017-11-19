@@ -10,5 +10,7 @@ namespace CameraBazaar.Services.Contracts
         UserDetailsListingModel GetUser(string id);
 
         UserFormServiceModel GetById(string id);
+
+        void WriteLastLogin(string id);
     }
 }

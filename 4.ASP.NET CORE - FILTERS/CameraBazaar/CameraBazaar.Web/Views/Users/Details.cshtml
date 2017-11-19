@@ -1,13 +1,19 @@
 ﻿@model UserDetailsListingModel
+
+@{
+    string userId = Model.Id.ToString();
+}
+
 @{
     ViewData["Title"] = "User Details";
+    Layout = "_UserLayout.cshtml";
 }
 <h2>
     @Model.Username
     <a class="btn btn-primary" href="/users/edit/@Model.Id">Edit Profile</a>
 </h2>
-
-@{ 
+<p>Last login: @Model.LastLogin</p>
+@{
     var camerasCount = Model.CamerasCollection.Count();
 }
 <div class="row">
@@ -17,7 +23,7 @@
         <p><label asp-for="Cameras"></label>: @Model.Cameras</p>
     </div>
     <h2>Cameras:</h2>
-    @if(camerasCount == 0)
+    @if (camerasCount == 0)
     {
         <div class="col-lg-12">
             The user is not seiling any cameras. Go to <a href="/home/index">home page</a> to
@@ -42,7 +48,7 @@
                     <p>@(camera.IsInStock ? "In Stock" : "Out of Stock")</p>
                 </div>
                 <div class="col-lg-3">
-                   <p><a class="btn btn-primary" href="/cameras/edit/@camera.Id">Edit</a></p>
+                    <p><a class="btn btn-primary" href="/cameras/edit/@camera.Id">Edit</a></p>
                     <p><a class="btn btn-warning" href="/cameras/delete/@camera.Id">Delete</a></p>
                 </div>
             </div>

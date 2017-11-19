@@ -1,3 +1,11 @@
 ﻿@{
-    Layout = "_Layout";
+    if (Context.Request.Path.StartsWithSegments("/users", StringComparison.OrdinalIgnoreCase))
+    {
+        Layout = "_UserLayout";
+    }
+    else
+    {
+        Layout = "_Layout";
+
+    }
 }

@@ -1,4 +1,5 @@
 ﻿using CameraBazaar.Services.Models.Cameras;
+using System;
 using System.Collections.Generic;
 
 namespace CameraBazaar.Services.Models.Users
@@ -16,5 +17,7 @@ namespace CameraBazaar.Services.Models.Users
         public string Cameras { get; set; }
 
         public IEnumerable<CameraUserColectionServiceModel> CamerasCollection { get; set; }
+
+        public DateTime LastLogin { get; set; }
     }
 }

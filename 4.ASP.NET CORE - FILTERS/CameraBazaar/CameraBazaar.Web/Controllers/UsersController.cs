@@ -1,16 +1,15 @@
 ﻿using CameraBazaar.Data.Models;
 using CameraBazaar.Services.Contracts;
-using CameraBazaar.Web.Models.AccountViewModels;
+using CameraBazaar.Web.Infrastructure.Filters;
 using CameraBazaar.Web.Models.UsersViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace CameraBazaar.Web.Controllers
 {
+    [Authorize]
     public class UsersController : Controller
     {
         private readonly IUserService userService;
@@ -37,7 +36,8 @@ namespace CameraBazaar.Web.Controllers
             {
                 Id = user.Id,
                 Email = user.Email,
-                Phone = user.PhoneNumber             
+                Phone = user.PhoneNumber,
+                LastLogin = user.LastLogin
             });
         }
 

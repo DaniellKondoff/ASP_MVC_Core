@@ -1,6 +1,7 @@
 ﻿using CameraBazaar.Data;
 using CameraBazaar.Data.Models;
 using CameraBazaar.Web.Infrastructure.Extensions;
+using CameraBazaar.Web.Infrastructure.Filters;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -37,6 +38,7 @@ namespace CameraBazaar.Web
             services.AddDomainServices();
 
             services.AddMvc();
+
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)

@@ -2,6 +2,7 @@
 using CameraBazaar.Services.Contracts;
 using CameraBazaar.Services.Models.Cameras;
 using CameraBazaar.Services.Models.Users;
+using System;
 using System.Linq;
 
 namespace CameraBazaar.Services.Implementations
@@ -51,9 +52,23 @@ namespace CameraBazaar.Services.Implementations
                         IsInStock = c.Quantity > 1 ? true : false,
                         ImageUrl = c.ImageUrl
                     }),
-                    Cameras = $"{u.Cameras.Count(c=> c.Quantity > 0)} in stock / {u.Cameras.Count(c => c.Quantity <= 0)} out of stock"
+                    Cameras = $"{u.Cameras.Count(c=> c.Quantity > 0)} in stock / {u.Cameras.Count(c => c.Quantity <= 0)} out of stock",
+                    LastLogin = u.LastLogin
                 })
                 .FirstOrDefault();
+        }
+
+        public void WriteLastLogin(string id)
+        {
+            var user = this.db.Users.Find(id);
+
+            if (user == null)
+            {
+                return;
+            }
+
+            user.LastLogin = DateTime.Now;
+            this.db.SaveChanges();
         }
     }
 }
