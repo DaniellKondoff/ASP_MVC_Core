@@ -11,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using AreasDemo.Data;
 using AreasDemo.Models;
 using AreasDemo.Services;
+using AutoMapper;
 
 namespace AreasDemo
 {
@@ -35,6 +36,8 @@ namespace AreasDemo
 
             // Add application services.
             services.AddTransient<IEmailSender, EmailSender>();
+
+            services.AddAutoMapper();
 
             services.AddMvc();
         }

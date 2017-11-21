@@ -5,13 +5,26 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using AreasDemo.Models;
+using AreasDemo.Data;
+using AutoMapper.QueryableExtensions;
 
 namespace AreasDemo.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly ApplicationDbContext db;
+
+        public HomeController(ApplicationDbContext db)
+        {
+            this.db = db;
+        }
+
         public IActionResult Index()
         {
+            var users = this.db.Users
+                .ProjectTo<UserViewModel>()
+                .ToList();
+
             return View();
         }
 
