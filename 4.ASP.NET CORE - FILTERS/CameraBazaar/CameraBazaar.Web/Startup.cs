@@ -35,6 +35,13 @@ namespace CameraBazaar.Web
                 .AddEntityFrameworkStores<CameraBazaarDbContext>()
                 .AddDefaultTokenProviders();
 
+            services.AddAuthentication().AddFacebook(fo =>
+            {
+                fo.AppId = Configuration["Authentication:Facebook:AppId"];
+                fo.AppSecret =
+                  Configuration["Authentication:Facebook:AppSecret"];
+            });
+
             services.AddDomainServices();
 
             services.AddMvc();
@@ -59,7 +66,7 @@ namespace CameraBazaar.Web
 
             app.UseStaticFiles();
 
-            
+
             app.UseAuthentication();
 
             app.UseMvcWithDefaultRoute();

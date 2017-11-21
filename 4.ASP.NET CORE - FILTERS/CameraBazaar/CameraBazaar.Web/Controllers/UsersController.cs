@@ -1,5 +1,6 @@
 ﻿using CameraBazaar.Data.Models;
 using CameraBazaar.Services.Contracts;
+using CameraBazaar.Web.Infrastructure.Common;
 using CameraBazaar.Web.Infrastructure.Filters;
 using CameraBazaar.Web.Models.UsersViewModels;
 using Microsoft.AspNetCore.Authorization;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace CameraBazaar.Web.Controllers
 {
-    [Authorize]
+   
     public class UsersController : Controller
     {
         private readonly IUserService userService;
@@ -21,6 +22,7 @@ namespace CameraBazaar.Web.Controllers
             this.userManager = userManager;
         }
 
+        [Authorize(Roles = "Administrator, LoggedUser")]
         public IActionResult Details(string id)
         {
             var user = this.userService.GetUser(id);
@@ -28,6 +30,7 @@ namespace CameraBazaar.Web.Controllers
             return View(user);
         }
 
+        [Authorize(Roles = "Administrator")]
         public async Task <IActionResult> Edit(string id)
         {
             var user = await this.userManager.FindByIdAsync(id);
@@ -42,6 +45,7 @@ namespace CameraBazaar.Web.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> Edit(string id, RegisterUserViewModel model)
         {
             var user = await this.userManager.FindByIdAsync(id);

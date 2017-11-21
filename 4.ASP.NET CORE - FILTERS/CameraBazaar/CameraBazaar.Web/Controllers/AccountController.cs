@@ -1,5 +1,6 @@
 ﻿using CameraBazaar.Data.Models;
 using CameraBazaar.Services.Contracts;
+using CameraBazaar.Web.Infrastructure.Common;
 using CameraBazaar.Web.Models.AccountViewModels;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
@@ -20,16 +21,19 @@ namespace CameraBazaar.Web.Controllers
         private readonly SignInManager<User> _signInManager;
         private readonly ILogger _logger;
         private readonly IUserService userService;
+        private readonly RoleManager<IdentityRole> roleManager;
 
         public AccountController(
             UserManager<User> userManager,
             SignInManager<User> signInManager,
             IUserService userService,
+            RoleManager<IdentityRole> roleManager,
             ILogger<AccountController> logger)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             this.userService = userService;
+            this.roleManager = roleManager;
             _logger = logger;
         }
 
@@ -61,8 +65,14 @@ namespace CameraBazaar.Web.Controllers
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");
-                    var userForLogging =_userManager.FindByNameAsync(model.Username);
-                    this.userService.WriteLastLogin(userForLogging.Result.Id);
+                    var userForLogging = await _userManager.FindByNameAsync(model.Username);
+                    this.userService.WriteLastLogin(userForLogging.Id);
+
+                    var roles = await _userManager.GetRolesAsync(userForLogging);
+                    if (roles.Count == 0)
+                    {
+                        await _userManager.AddToRoleAsync(userForLogging, GlobalConstants.GuestInfo.UserRole);
+                    }
                     return RedirectToLocal(returnUrl);
                 }
                 if (result.RequiresTwoFactor)
