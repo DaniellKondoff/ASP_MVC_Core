@@ -6,6 +6,7 @@ using CameraBazaar.Web.Models.CamerasViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Linq;
 
 namespace CameraBazaar.Web.Controllers
 {
@@ -26,6 +27,11 @@ namespace CameraBazaar.Web.Controllers
         [HttpPost]
         public IActionResult Add(CameraFormViewModel cameraModel)
         {
+            if (cameraModel.LightMetering == null || !cameraModel.LightMetering.Any())
+            {
+                ModelState.AddModelError(nameof(cameraModel.LightMetering), "Please Select at least one Light Metering");
+            }
+
             if (!ModelState.IsValid)
             {
                 return View(cameraModel);
