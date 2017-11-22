@@ -7,20 +7,32 @@ using Microsoft.AspNetCore.Mvc;
 using AreasDemo.Models;
 using AreasDemo.Data;
 using AutoMapper.QueryableExtensions;
+using AutoMapper;
 
 namespace AreasDemo.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ApplicationDbContext db;
+        private readonly IMapper mapper;
 
-        public HomeController(ApplicationDbContext db)
+        public HomeController(ApplicationDbContext db, IMapper mapper)
         {
             this.db = db;
+            this.mapper = mapper;
         }
 
         public IActionResult Index()
         {
+            var applicationUser = new ApplicationUser
+            {
+                Email = "some@mail.bg",
+                UserName = "ivan",
+                Id = "1"
+            };
+
+            var mappedObj = this.mapper.Map<UserViewModel>(applicationUser);
+
             var users = this.db.Users
                 .ProjectTo<UserViewModel>()
                 .ToList();

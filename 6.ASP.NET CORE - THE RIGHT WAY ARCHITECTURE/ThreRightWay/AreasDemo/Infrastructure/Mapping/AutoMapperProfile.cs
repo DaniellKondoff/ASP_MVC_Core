@@ -39,6 +39,14 @@ namespace AreasDemo.Infrastructure.Mapping
                 })
                 .ToList()
                 .ForEach(mapping => this.CreateMap(mapping.Source, mapping.Destination));
+
+
+            allTypes
+                .Where(t => t.IsClass && !t.IsAbstract && typeof(IHaveCustomMapping).IsAssignableFrom(t))
+                .Select(Activator.CreateInstance)
+                .Cast<IHaveCustomMapping>()
+                .ToList()
+                .ForEach(t => t.ConfigureMapping(this));
         }
     }
 }
