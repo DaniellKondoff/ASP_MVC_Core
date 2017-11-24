@@ -37,7 +37,7 @@ namespace LearningSystem.Data
                 .HasOne(c => c.Trainer)
                 .WithMany(t => t.Trainings)
                 .HasForeignKey(c => c.TrainerId);
-
+                
             builder
                 .Entity<Article>()
                 .HasOne(a => a.Author)

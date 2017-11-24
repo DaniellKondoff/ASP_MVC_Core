@@ -3,9 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27004.2002
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LearningSystem.Web", "LearningSystem.Web\LearningSystem.Web.csproj", "{C86F37CD-AE45-42A8-B6EE-12AC6EDBDEFC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LearningSystem.Web", "LearningSystem.Web\LearningSystem.Web.csproj", "{C86F37CD-AE45-42A8-B6EE-12AC6EDBDEFC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LearningSystem.Data", "LearningSystem.Data\LearningSystem.Data.csproj", "{AB26D780-14D4-46BB-A260-C171FF719EAA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LearningSystem.Data", "LearningSystem.Data\LearningSystem.Data.csproj", "{AB26D780-14D4-46BB-A260-C171FF719EAA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LearningSystem.Services", "LearningSystem.Services\LearningSystem.Services.csproj", "{39A2632E-A21B-42D3-A9D8-D1B621EB3D21}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LearningSystem.Core", "LearningSystem.Core\LearningSystem.Core.csproj", "{9A249C12-6C3D-4CB7-A05B-2490104E5981}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +25,14 @@ Global
 		{AB26D780-14D4-46BB-A260-C171FF719EAA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AB26D780-14D4-46BB-A260-C171FF719EAA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AB26D780-14D4-46BB-A260-C171FF719EAA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{39A2632E-A21B-42D3-A9D8-D1B621EB3D21}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{39A2632E-A21B-42D3-A9D8-D1B621EB3D21}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{39A2632E-A21B-42D3-A9D8-D1B621EB3D21}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{39A2632E-A21B-42D3-A9D8-D1B621EB3D21}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9A249C12-6C3D-4CB7-A05B-2490104E5981}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9A249C12-6C3D-4CB7-A05B-2490104E5981}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9A249C12-6C3D-4CB7-A05B-2490104E5981}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9A249C12-6C3D-4CB7-A05B-2490104E5981}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

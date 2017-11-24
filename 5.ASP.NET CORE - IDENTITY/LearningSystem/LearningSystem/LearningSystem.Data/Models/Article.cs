@@ -17,7 +17,7 @@ namespace LearningSystem.Data.Models
 
         public DateTime PublishDate { get; set; }
 
-        public int AuthorId { get; set; }
+        public string AuthorId { get; set; }
 
         public User Author { get; set; }
     }

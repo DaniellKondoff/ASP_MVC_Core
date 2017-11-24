@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using LearningSystem.Core.Mapping;
 using System;
 using System.Linq;
 

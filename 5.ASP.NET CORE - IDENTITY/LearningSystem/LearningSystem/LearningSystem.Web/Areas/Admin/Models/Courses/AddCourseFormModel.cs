@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace LearningSystem.Web.Infrastructure.Mapping
+namespace LearningSystem.Web.Areas.Admin.Models.Courses
 {
-    public interface IMapFrom<TModel>
+    public class AddCourseFormModel
     {
+
     }
 }
