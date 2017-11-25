@@ -40,6 +40,8 @@ namespace LearningSystem.Web
 
             services.AddDomainServices();
 
+            services.AddRouting(routing => routing.LowercaseUrls = true);
+
             services.AddMvc(opt =>
             {
                 opt.Filters.Add<AutoValidateAntiforgeryTokenAttribute>();
@@ -68,6 +70,11 @@ namespace LearningSystem.Web
 
             app.UseMvc(routes =>
             {
+                routes.MapRoute(
+                    name: "blog",
+                    template: "blogg/articles/details/{id}/{title}",
+                    defaults: new {area = "Blogg", controller="Articles", action = "Details"});
+
                 routes.MapRoute(
                     name: "areas",
                     template: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
