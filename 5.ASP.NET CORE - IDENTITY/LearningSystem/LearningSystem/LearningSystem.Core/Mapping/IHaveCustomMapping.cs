@@ -4,6 +4,6 @@ namespace LearningSystem.Core.Mapping
 {
     public interface IHaveCustomMapping
     {
-        void ConfigureMapping(Profile profile);
+        void ConfigureMapping(Profile mapper);
     }
 }
