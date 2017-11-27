@@ -36,7 +36,15 @@
     }
     else
     {
-        <span>This course has already started</span>
+        if (Model.CourseDetails.EndDate < DateTime.UtcNow)
+        {
+            <span>This course has already finished</span>
+
+        }
+        else
+        {
+            <span>This course has already started</span>
+        }
     }
 }
 else

@@ -1,7 +1,5 @@
 ﻿using LearningSystem.Services.Models;
-using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace LearningSystem.Services.Contracts
@@ -10,8 +8,8 @@ namespace LearningSystem.Services.Contracts
     {
         Task<IEnumerable<CourseListingServiceModel>> AllActiveAsync();
 
-        Task<CourseDetailsServiceModel> ByIdAsync(int id);
-
+        Task<TModel> ByIdAsync<TModel>(int id) where TModel : class;
+    
         Task<bool> StudentIsSignedInCourseAsync(int courseId, string userId);
 
         Task<bool> SignInStudentAsync(int courseId, string userId);

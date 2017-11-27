@@ -31,12 +31,12 @@ namespace LearningSystem.Services.Implementations
                 .ToListAsync();
         }
 
-        public async Task<CourseDetailsServiceModel> ByIdAsync(int id)
+        public async Task<TModel> ByIdAsync<TModel>(int id) where TModel : class
         {
             return await this.db
                 .Courses
                 .Where(c => c.Id == id)
-                .ProjectTo<CourseDetailsServiceModel>()
+                .ProjectTo<TModel>()
                 .FirstOrDefaultAsync();
         }
 

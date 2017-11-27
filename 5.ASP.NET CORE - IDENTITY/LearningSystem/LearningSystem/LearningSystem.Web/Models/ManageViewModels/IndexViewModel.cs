@@ -1,14 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace LearningSystem.Web.Models.ManageViewModels
 {
     public class IndexViewModel
     {
+        [Required]
+        public string Name { get; set; }
+
+
         public string Username { get; set; }
+
+        [DataType(DataType.Date)]
+        public DateTime BirthDate { get; set; }
 
         public bool IsEmailConfirmed { get; set; }
 
@@ -21,5 +25,6 @@ namespace LearningSystem.Web.Models.ManageViewModels
         public string PhoneNumber { get; set; }
 
         public string StatusMessage { get; set; }
+
     }
 }
