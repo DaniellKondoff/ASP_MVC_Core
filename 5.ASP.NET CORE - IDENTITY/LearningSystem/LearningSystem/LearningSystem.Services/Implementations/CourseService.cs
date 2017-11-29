@@ -40,6 +40,32 @@ namespace LearningSystem.Services.Implementations
                 .FirstOrDefaultAsync();
         }
 
+        public async Task<IEnumerable<CourseListingServiceModel>> FindAsync(string searchText)
+        {
+            searchText = searchText ?? string.Empty;
+            return await this.db
+                        .Courses
+                        .OrderByDescending(c => c.Id)
+                        .Where(c => c.Name.ToLower().Contains(searchText.ToLower()))
+                        .ProjectTo<CourseListingServiceModel>()
+                        .ToListAsync();
+        }
+
+        public async Task<bool> SaveExamSubmission(int courseId, string studentId, byte[] examSubmission)
+        {
+            var studentInCourse = await this.db.FindAsync<StudentCourse>(studentId, courseId);
+
+            if (studentInCourse == null)
+            {
+                return false;
+            }
+
+            studentInCourse.ExamSubmission = examSubmission;
+            await this.db.SaveChangesAsync();
+
+            return true;
+        }
+
         public async Task<bool> SignInStudentAsync(int courseId, string studentId)
         {
             var courseInfo = await this.GetCourseWithStudentsInfo(courseId, studentId);

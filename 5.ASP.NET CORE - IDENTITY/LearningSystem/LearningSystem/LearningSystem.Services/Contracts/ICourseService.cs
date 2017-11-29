@@ -15,5 +15,8 @@ namespace LearningSystem.Services.Contracts
         Task<bool> SignInStudentAsync(int courseId, string userId);
 
         Task<bool> SignOutStudentAsync(int courseId, string studentId);
+
+        Task<IEnumerable<CourseListingServiceModel>> FindAsync(string searchText);
+        Task<bool> SaveExamSubmission(int id, string userId, byte[] fileContents);
     }
 }

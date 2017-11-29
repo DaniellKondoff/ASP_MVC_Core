@@ -16,5 +16,7 @@ namespace LearningSystem.Services.Contracts
         Task<bool> IsTrainerCourse(int courseId, string trainerId);
 
         Task<bool> AddGrade(int courseId, string studentId, Grade grade);
+
+        Task<byte[]> GetExamSubmission(int courseId, string studentId);
     }
 }

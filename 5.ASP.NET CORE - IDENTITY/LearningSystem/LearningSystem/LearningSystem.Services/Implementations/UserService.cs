@@ -20,6 +20,17 @@ namespace LearningSystem.Services.Implementations
             this.db = db;
         }
 
+        public async Task<IEnumerable<UserListingServiceModel>> FindAsync(string searchText)
+        {
+            searchText = searchText ?? string.Empty;
+            return await this.db
+                .Users
+                .OrderBy(u => u.UserName)
+                .Where(u => u.Name.ToLower().Contains(searchText.ToLower()))
+                .ProjectTo<UserListingServiceModel>()
+                .ToListAsync();
+        }
+
         public async Task<UserProfileServiceModel> ProfileAsync(string id)
         {
             return await this.db

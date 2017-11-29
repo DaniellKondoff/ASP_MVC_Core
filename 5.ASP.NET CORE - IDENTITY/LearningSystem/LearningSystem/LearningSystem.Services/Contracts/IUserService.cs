@@ -9,5 +9,7 @@ namespace LearningSystem.Services.Contracts
     public interface IUserService
     {
         Task<UserProfileServiceModel> ProfileAsync(string id);
+
+        Task<IEnumerable<UserListingServiceModel>> FindAsync(string searchText);
     }
 }

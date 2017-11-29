@@ -45,6 +45,15 @@ namespace LearningSystem.Services.Implementations
                 .ToListAsync();
         }
 
+        public async Task<byte[]> GetExamSubmission(int courseId, string studentId)
+        {
+            var studentInCourse = await this.db
+                    .FindAsync<StudentCourse>(studentId, courseId);
+
+            
+            return studentInCourse?.ExamSubmission.ToArray();
+        }
+
         public async Task<bool> IsTrainerCourse(int courseId, string trainerId)
         {
             return await this.db.Courses

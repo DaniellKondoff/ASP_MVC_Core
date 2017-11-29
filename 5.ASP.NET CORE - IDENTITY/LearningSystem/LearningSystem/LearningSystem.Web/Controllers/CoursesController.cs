@@ -1,13 +1,16 @@
-﻿using LearningSystem.Data.Models;
+﻿using LearningSystem.Data;
+using LearningSystem.Data.Models;
 using LearningSystem.Services.Contracts;
 using LearningSystem.Services.Models;
 using LearningSystem.Web.Infrastructure.Extensions;
 using LearningSystem.Web.Models.CoursesViewModels;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -79,6 +82,32 @@ namespace LearningSystem.Web.Controllers
 
             TempData.AddSuccessMessage("You have signed out course successfully");
 
+            return RedirectToAction(nameof(Details), new { id });
+        }
+
+        [Authorize]
+        [HttpPost]
+        public async Task<IActionResult> SubmitExam(IFormFile exam, int id)
+        {
+            if (!exam.FileName.EndsWith(".zip") || exam.Length > DataConstants.CourseExamSUbmissionFileLenght)
+            {
+                TempData.AddErrorMessage("Your submission should be a 'zip' file with no more than 2MB in size");
+
+                return RedirectToAction(nameof(Details), new { id });
+            }
+
+            var fileContents = await exam.ToByteArrayAsync();
+
+            var userId = this.userManager.GetUserId(User);
+
+            var success = await this.courseService.SaveExamSubmission(id, userId, fileContents);
+
+            if (!success)
+            {
+                return BadRequest();
+            }
+
+            TempData.AddSuccessMessage("Exam SUbmissions Saved");
             return RedirectToAction(nameof(Details), new { id });
         }
     }

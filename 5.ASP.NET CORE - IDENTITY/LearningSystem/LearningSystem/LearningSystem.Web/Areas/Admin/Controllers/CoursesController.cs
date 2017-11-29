@@ -45,7 +45,8 @@ namespace LearningSystem.Web.Areas.Admin.Controllers
             }
 
             await this.courseService
-                .CreateAsync(model.Name, model.Description, model.StartDate, model.EndDate, model.TrainerId);
+                .CreateAsync(model.Name, model.Description, model.StartDate, 
+                model.EndDate.AddDays(1), model.TrainerId);
 
             TempData.AddSuccessMessage($"Course {model.Name} created successfully!");
 
