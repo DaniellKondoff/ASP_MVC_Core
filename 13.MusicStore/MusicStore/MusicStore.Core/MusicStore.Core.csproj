@@ -5,10 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Admin\Contracts\" />
-    <Folder Include="Admin\Implementations\" />
-    <Folder Include="Contracts\" />
-    <Folder Include="Implementations\" />
+    <PackageReference Include="AutoMapper" Version="6.2.2" />
   </ItemGroup>
 
 </Project>

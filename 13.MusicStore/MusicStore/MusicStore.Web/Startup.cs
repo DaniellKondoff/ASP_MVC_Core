@@ -1,11 +1,14 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using MusicStore.Data;
 using MusicStore.Data.Models;
+using MusicStore.Web.Infrastructure.Extensions;
 
 namespace MusicStore.Web
 {
@@ -24,16 +27,32 @@ namespace MusicStore.Web
             services.AddDbContext<MusicStoreDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddIdentity<User, IdentityRole>()
+            services.AddIdentity<User, IdentityRole>(opt =>
+            {
+                opt.Password.RequireDigit = false;
+                opt.Password.RequireLowercase = false;
+                opt.Password.RequireNonAlphanumeric = false;
+                opt.Password.RequireUppercase = false;
+            })
                 .AddEntityFrameworkStores<MusicStoreDbContext>()
                 .AddDefaultTokenProviders();
 
-            services.AddMvc();
+            services.AddAutoMapper();
+
+            services.AddDomainServices();
+
+            services.AddRouting(routing => routing.LowercaseUrls = true);
+
+            services.AddMvc(opt =>
+            {
+                opt.Filters.Add<AutoValidateAntiforgeryTokenAttribute>();
+            });
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+            //DBMigrations TODO 
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -51,6 +70,10 @@ namespace MusicStore.Web
 
             app.UseMvc(routes =>
             {
+                routes.MapRoute(
+                    name: "areas",
+                    template: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
