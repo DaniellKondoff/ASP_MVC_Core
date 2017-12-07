@@ -1,5 +1,6 @@
 ﻿using LearningSystem.Data.Models;
 using LearningSystem.Services.Contracts;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -31,6 +32,12 @@ namespace LearningSystem.Web.Controllers
             var profile = await this.userService.ProfileAsync(user.Id);
 
             return View(profile);
+        }
+
+        [Authorize]
+        public IActionResult DownloadCertificate()
+        {
+            return View();
         }
     }
 }

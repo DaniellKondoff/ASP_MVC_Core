@@ -43,6 +43,7 @@ namespace LearningSystem.Services.Implementations
         public async Task<IEnumerable<CourseListingServiceModel>> FindAsync(string searchText)
         {
             searchText = searchText ?? string.Empty;
+
             return await this.db
                         .Courses
                         .OrderByDescending(c => c.Id)
