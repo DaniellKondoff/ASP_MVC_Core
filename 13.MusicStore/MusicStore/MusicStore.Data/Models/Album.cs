@@ -22,6 +22,6 @@ namespace MusicStore.Data.Models
 
         public decimal Price { get; set; }
 
-        public ICollection<SongAlbum> Songs { get; set; } = new HashSet<SongAlbum>();
+        public List<SongAlbum> Songs { get; set; } = new List<SongAlbum>();
     }
 }

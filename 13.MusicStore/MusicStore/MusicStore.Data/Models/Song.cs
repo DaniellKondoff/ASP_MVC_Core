@@ -24,6 +24,6 @@ namespace MusicStore.Data.Models
 
         public Ganre Ganre { get; set; }
 
-        public ICollection<SongAlbum> Albums { get; set; } = new HashSet<SongAlbum>();
+        public List<SongAlbum> Albums { get; set; } = new List<SongAlbum>();
     }
 }

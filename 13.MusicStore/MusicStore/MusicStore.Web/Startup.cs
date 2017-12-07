@@ -51,7 +51,7 @@ namespace MusicStore.Web
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            //DBMigrations TODO 
+            app.UseDatabaseMigration(); 
 
             if (env.IsDevelopment())
             {

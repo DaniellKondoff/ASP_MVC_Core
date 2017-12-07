@@ -14,12 +14,14 @@ namespace MusicStore.Data.ModelConfiguration
             builder
                 .HasOne(sa => sa.Song)
                 .WithMany(s => s.Albums)
-                .HasForeignKey(sa => sa.SongId);
+                .HasForeignKey(sa => sa.SongId)
+                .OnDelete(DeleteBehavior.Restrict);
 
             builder
                 .HasOne(sa => sa.Album)
                 .WithMany(a => a.Songs)
-                .HasForeignKey(sa => sa.AlbumId);
+                .HasForeignKey(sa => sa.AlbumId)
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }
