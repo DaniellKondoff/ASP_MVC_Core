@@ -1,8 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc.ViewFeatures;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using MusicStore.Web.Infrastructure.Common;
 
 namespace MusicStore.Web.Infrastructure.Extensions
 {
@@ -10,12 +7,12 @@ namespace MusicStore.Web.Infrastructure.Extensions
     {
         public static void AddSuccessMessage(this ITempDataDictionary tempData, string message)
         {
-            //tempData[WebConstants.TempDataSuccessMessageKey] = message;
+            tempData[WebConstants.TempDataSuccessMessageKey] = message;
         }
 
         public static void AddErrorMessage(this ITempDataDictionary tempData, string message)
         {
-            //tempData[WebConstants.TempDataErrorMessageKey] = message;
+            tempData[WebConstants.TempDataErrorMessageKey] = message;
         }
     }
 }

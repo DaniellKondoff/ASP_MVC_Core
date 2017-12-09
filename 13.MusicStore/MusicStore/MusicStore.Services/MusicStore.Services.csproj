@@ -5,10 +5,18 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Admin\Contracts\" />
-    <Folder Include="Admin\Implementations\" />
     <Folder Include="Contracts\" />
     <Folder Include="Implementations\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="6.2.2" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\MusicStore.Core\MusicStore.Core.csproj" />
+    <ProjectReference Include="..\MusicStore.Data\MusicStore.Data.csproj" />
   </ItemGroup>
 
 </Project>
