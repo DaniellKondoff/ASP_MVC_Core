@@ -12,6 +12,13 @@
 
         public const int SongTitleMinLenght = 2;
         public const int SongTitleMaxLenght = 50;
-        public const double SongMinPrice = 0; 
+        public const double SongMinPrice = 0;
+
+        public const int UserFirstNameMaxLength = 50;
+        public const int UserFirstNameMinLength = 2;
+        public const int UserLastNameMaxLength = 50;
+        public const int UserLastNameMinLength = 2;
+        public const int UserUserNameMaxLenght = 50;
+        public const int UserUserNameMinLenght = 3;
     }
 }

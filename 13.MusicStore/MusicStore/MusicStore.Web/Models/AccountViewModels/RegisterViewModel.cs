@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
+using static MusicStore.Data.DataConstants;
 
 namespace MusicStore.Web.Models.AccountViewModels
 {
@@ -10,6 +12,21 @@ namespace MusicStore.Web.Models.AccountViewModels
         public string Email { get; set; }
 
         [Required]
+        [MinLength(UserUserNameMinLenght)]
+        [MaxLength(UserUserNameMaxLenght)]
+        public string UserName { get; set; }
+
+        [Required]
+        [MinLength(UserFirstNameMinLength)]
+        [MaxLength(UserFirstNameMaxLength)]
+        public string FirstName { get; set; }
+
+        [Required]
+        [MinLength(UserLastNameMinLength)]
+        [MaxLength(UserLastNameMaxLength)]
+        public string LastName { get; set; }
+
+        [Required]
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
         [DataType(DataType.Password)]
         [Display(Name = "Password")]
@@ -19,5 +36,8 @@ namespace MusicStore.Web.Models.AccountViewModels
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
+
+        [DataType(DataType.Date)]
+        public DateTime BirthDate { get; set; }
     }
 }
