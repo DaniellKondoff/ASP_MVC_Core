@@ -3,9 +3,6 @@ using MusicStore.Services.Admin.Contracts;
 using MusicStore.Web.Areas.Admin.Models.Artists;
 using MusicStore.Web.Infrastructure.Extensions;
 using MusicStore.Web.Infrastructure.Filters;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace MusicStore.Web.Areas.Admin.Controllers
@@ -65,7 +62,7 @@ namespace MusicStore.Web.Areas.Admin.Controllers
         [ValidateModelState]
         public async Task<IActionResult> Edit(int id, ArtistFormViewModel model)
         {
-           var success=  await this.artistService.EditAsync(id, model.Name);
+            var success = await this.artistService.EditAsync(id, model.Name);
 
             if (!success)
             {

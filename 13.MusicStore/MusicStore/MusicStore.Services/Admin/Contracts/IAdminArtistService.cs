@@ -19,5 +19,9 @@ namespace MusicStore.Services.Admin.Contracts
         Task<bool> EditAsync(int id, string name);
 
         Task<bool> DeleteAsync(int id);
+
+        Task<IEnumerable<AdminBaseArtistServiceModel>> AllBasicAsync();
+
+        Task<bool> ExistAsync(int artistId);
     }
 }

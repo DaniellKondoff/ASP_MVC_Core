@@ -1,9 +1,6 @@
-﻿using MusicStore.Core.Mapping;
+﻿using AutoMapper;
+using MusicStore.Core.Mapping;
 using MusicStore.Data.Models;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using AutoMapper;
 
 namespace MusicStore.Services.Admin.Models.Artists
 {

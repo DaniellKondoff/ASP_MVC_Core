@@ -31,6 +31,13 @@ namespace MusicStore.Services.Admin.Implementations
                 .ToListAsync();
         }
 
+        public async Task<IEnumerable<AdminBaseArtistServiceModel>> AllBasicAsync()
+        {
+            return await this.db.Artists
+                    .ProjectTo<AdminBaseArtistServiceModel>()
+                    .ToListAsync();
+        }
+
         public async Task CreateAsync(string name)
         {
             if (name == null)
@@ -78,6 +85,12 @@ namespace MusicStore.Services.Admin.Implementations
             await this.db.SaveChangesAsync();
 
             return true;
+        }
+
+        public async Task<bool> ExistAsync(int artistId)
+        {
+            return await this.db.Artists
+                .AnyAsync(a => a.Id == artistId);
         }
 
         public async Task<AdminBaseArtistServiceModel> GetByIdAsync(int id)

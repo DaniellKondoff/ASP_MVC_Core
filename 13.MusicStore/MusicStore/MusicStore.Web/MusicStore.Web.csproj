@@ -25,9 +25,4 @@
     <ProjectReference Include="..\MusicStore.Services\MusicStore.Services.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Areas\Admin\Models\Songs\" />
-    <Folder Include="Areas\Admin\Views\Songs\" />
-  </ItemGroup>
-
 </Project>
