@@ -4,7 +4,7 @@ namespace MusicStore.Web.Infrastructure.Extensions
 {
     public static class ControllerExtensions
     {
-        public static IActionResult ViewOrNotFounr(this Controller controller, object model)
+        public static IActionResult ViewOrNotFound(this Controller controller, object model)
         {
             if (model == null)
             {
