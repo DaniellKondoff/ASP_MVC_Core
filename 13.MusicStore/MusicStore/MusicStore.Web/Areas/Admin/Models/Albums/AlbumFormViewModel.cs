@@ -12,7 +12,7 @@ namespace MusicStore.Web.Areas.Admin.Models.Albums
         [MaxLength(AlbumTitleMaxLenght)]
         public string Title { get; set; }
 
-        [MaxLength(AlbumMaxAmountOfSongs)]
+        [Range(AlbumMinAmountOfSongs, AlbumMaxAmountOfSongs)]
         public int AmountOfSongs { get; set; }
 
         [Required]
@@ -21,6 +21,7 @@ namespace MusicStore.Web.Areas.Admin.Models.Albums
 
         public IEnumerable<SelectListItem> Artists { get; set; }
 
+        [Range(AlbumMinPrice, double.MaxValue)]
         public decimal Price { get; set; }
     }
 }

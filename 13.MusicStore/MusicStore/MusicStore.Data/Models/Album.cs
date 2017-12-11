@@ -13,13 +13,14 @@ namespace MusicStore.Data.Models
         [MaxLength(AlbumTitleMaxLenght)]
         public string Title { get; set; }
 
-        [MaxLength(AlbumMaxAmountOfSongs)]
+        [Range(AlbumMinAmountOfSongs, AlbumMaxAmountOfSongs)]
         public int AmountOfSongs { get; set; }
 
         public int ArtistId { get; set; }
 
         public Artist Artist { get; set; }
 
+        [Range(AlbumMinPrice, double.MaxValue)]
         public decimal Price { get; set; }
 
         public List<SongAlbum> Songs { get; set; } = new List<SongAlbum>();
