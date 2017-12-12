@@ -20,5 +20,6 @@ namespace MusicStore.Services.Admin.Contracts
         Task EditAsync(int id, string name, decimal price, double duration, int artistId, Ganre ganre);
 
         Task<bool> DeleteAsync(int id);
+        Task<IEnumerable<AdminSongBaseServiceModel>> AllBasicAsync(int id);
     }
 }

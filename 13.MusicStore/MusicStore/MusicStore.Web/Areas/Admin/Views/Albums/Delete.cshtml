@@ -1,0 +1,10 @@
+﻿@model int
+@{
+    ViewData["Title"] = "Remove Album";
+}
+
+<h2>Are you sure you want to remove this Album?</h2>
+
+<a class="btn btn-danger" asp-action="Destroy" asp-route-id="@Model">Confirm Delete</a>
+<a class="btn btn-default" asp-action="ListAll">Back</a>
+

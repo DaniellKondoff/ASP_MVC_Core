@@ -30,6 +30,14 @@ namespace MusicStore.Services.Admin.Implementations
                 .ToListAsync();
         }
 
+        public async Task<IEnumerable<AdminSongBaseServiceModel>> AllBasicAsync(int id)
+        {
+            return await this.db.Songs
+                .Where(s => s.ArtistId == id)
+                .ProjectTo<AdminSongBaseServiceModel>()
+                .ToListAsync();
+        }
+
         public async Task CreateAsync(string name, decimal price, double duration, int artistId, Ganre ganre)
         {
             var song = new Song

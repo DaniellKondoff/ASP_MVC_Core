@@ -47,7 +47,7 @@
         {
             <tr>
                 <td>
-                    @album.Title
+                   <a asp-action="Details" asp-route-id="@album.Id" >@album.Title</a>
                 </td>
                 <td>
                     @album.AmountOfSongs

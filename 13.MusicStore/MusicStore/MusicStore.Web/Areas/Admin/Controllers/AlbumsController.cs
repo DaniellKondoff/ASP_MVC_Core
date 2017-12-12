@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc.Rendering;
 using MusicStore.Services.Admin.Contracts;
 using MusicStore.Web.Areas.Admin.Models.Albums;
+using MusicStore.Web.Infrastructure.Extensions;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -12,11 +13,13 @@ namespace MusicStore.Web.Areas.Admin.Controllers
     {
         private readonly IAdminArtistService artistService;
         private readonly IAdminAlbumService albumService;
+        private readonly IAdminSongService songService;
 
-        public AlbumsController(IAdminArtistService artistService, IAdminAlbumService albumService)
+        public AlbumsController(IAdminArtistService artistService, IAdminAlbumService albumService, IAdminSongService songService)
         {
             this.artistService = artistService;
             this.albumService = albumService;
+            this.songService = songService;
         }
 
         public async Task<IActionResult> Add()
@@ -107,6 +110,85 @@ namespace MusicStore.Web.Areas.Admin.Controllers
             return RedirectToAction(nameof(ListAll));
         }
 
+        public IActionResult Delete(int Id)
+        {
+            return View(Id);
+        }
+
+        public async Task<IActionResult> Destroy(int id)
+        {
+            var success = await this.albumService.DeleteAsync(id);
+
+            if (!success)
+            {
+                TempData.AddErrorMessage("Invalid Request");
+            }
+            else
+            {
+                TempData.AddSuccessMessage("Album has been deleted successfully");
+            }
+            return RedirectToAction(nameof(ListAll));
+        }
+
+        public async Task<IActionResult> Details(int Id)
+        {
+            var album = await this.albumService.DetailsAsync(Id);
+
+            if (album == null)
+            {
+                return NotFound();
+            }
+
+            return View(album);
+        }
+
+        public async Task<IActionResult> AddSongTo (int Id)
+        {
+            var album = await this.albumService.GetByIdAsync(Id);
+
+            if (album == null)
+            {
+                return NotFound();
+            }
+
+            var artistId = await this.albumService.GetArtistIdByAlbumId(Id);
+
+            return View(new AlbumAddingSongViewModel
+            {
+                Id = Id,
+                Title = album.Title,
+                Songs = await this.GetSongs(artistId)
+            });
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddSongTo(AlbumAddingSongFormViewModel model)
+        {
+            var album = await this.albumService.GetByIdAsync(model.Id);
+
+            if (album == null)
+            {
+                ModelState.AddModelError(nameof(model.Id), "Invalid Album");
+            }
+
+            var artist = await this.albumService.GetArtistIdByAlbumId(model.Id);
+
+            if (album == null)
+            {
+                ModelState.AddModelError(nameof(model.Id), "Invalid Album's Artist");
+            }
+            if (true)
+            {
+
+            }
+            if (!ModelState.IsValid)
+            {
+                return View();
+            }
+
+            //TODO
+            return null;
+        }
 
         private async Task<IEnumerable<SelectListItem>> GetArtists()
         {
@@ -121,6 +203,21 @@ namespace MusicStore.Web.Areas.Admin.Controllers
                 .ToList();
 
             return artistListItems;
+        }
+
+        private async Task<IEnumerable<SelectListItem>> GetSongs(int Id)
+        {
+            var songs = await this.songService.AllBasicAsync(Id);
+
+            var songsListItems = songs
+                .Select(a => new SelectListItem
+                {
+                    Text = a.Name,
+                    Value = a.Id.ToString()
+                })
+                .ToList();
+
+            return songsListItems;
         }
     }
 }

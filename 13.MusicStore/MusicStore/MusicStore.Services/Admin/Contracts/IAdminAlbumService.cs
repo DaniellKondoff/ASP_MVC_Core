@@ -19,5 +19,11 @@ namespace MusicStore.Services.Admin.Contracts
         Task<bool> ExistAsync(int id);
 
         Task EditAsync(int id, string title, decimal price, int amountOfSongs, int artistId);
+
+        Task<bool> DeleteAsync(int id);
+
+        Task<AdminAlbumDetailsServiceModel> DetailsAsync(int id);
+
+        Task<int> GetArtistIdByAlbumId(int Id);
     }
 }

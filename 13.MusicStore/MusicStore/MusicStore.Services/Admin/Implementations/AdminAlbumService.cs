@@ -34,6 +34,29 @@ namespace MusicStore.Services.Admin.Implementations
             await this.db.SaveChangesAsync();
         }
 
+        public async Task<bool> DeleteAsync(int id)
+        {
+            var album = await this.db.Albums.FindAsync(id);
+
+            if (album == null)
+            {
+                return false;
+            }
+
+            this.db.Remove(album);
+            await this.db.SaveChangesAsync();
+
+            return true;
+        }
+
+        public async Task<AdminAlbumDetailsServiceModel> DetailsAsync(int id)
+        {
+            return await this.db.Albums
+                .Where(a => a.Id == id)
+                .ProjectTo<AdminAlbumDetailsServiceModel>()
+                .FirstOrDefaultAsync();
+        }
+
         public async Task EditAsync(int id, string title, decimal price, int amountOfSongs, int artistId)
         {
             var album = await this.db.Albums.FindAsync(id);
@@ -50,6 +73,13 @@ namespace MusicStore.Services.Admin.Implementations
         public async Task<bool> ExistAsync(int id)
         {
             return await this.db.Albums.AnyAsync(a => a.Id == id);
+        }
+
+        public async Task<int> GetArtistIdByAlbumId(int Id)
+        {
+            var album = await this.db.Albums.FindAsync(Id);
+
+            return album.ArtistId;
         }
 
         public async Task<AdminAlbumEditServiceModel> GetByIdAsync(int id)
