@@ -7,7 +7,7 @@ namespace MusicStore.Services.Admin.Models.Albums
     {
         public string Title { get; set; }
 
-        public int AmountOfSong { get; set; }
+        public int AmountOfSongs { get; set; }
 
         public decimal Price { get; set; }
     }

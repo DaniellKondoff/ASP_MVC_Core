@@ -4,9 +4,9 @@ using MusicStore.Data.Models;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace MusicStore.Services.Admin.Models.Albums
+namespace MusicStore.Services.Models.Albums
 {
-    public class AdminAlbumDetailsServiceModel : IMapFrom<Album>, IHaveCustomMapping
+    public class AlbumDetailsServiceModel : IMapFrom<Album>, IHaveCustomMapping
     {
         public int Id { get; set; }
 
@@ -18,9 +18,9 @@ namespace MusicStore.Services.Admin.Models.Albums
 
         public void ConfigureMapping(Profile mapper)
         {
-            mapper.CreateMap<Album, AdminAlbumDetailsServiceModel>()
+            mapper.CreateMap<Album, AlbumDetailsServiceModel>()
                 .ForMember(a => a.Artist, cfg => cfg.MapFrom(a => a.Artist.Name))
-                .ForMember(a => a.Songs, cfg => cfg.MapFrom(a => a.Songs.Select(s=> s.Song.Name)));
+                .ForMember(a => a.Songs, cfg => cfg.MapFrom(a => a.Songs.Select(s => s.Song.Name)));
         }
     }
 }

@@ -79,12 +79,11 @@ namespace MusicStore.Web.Areas.Admin.Controllers
             {
                 Title = album.Title,
                 Price = album.Price,
-                AmountOfSongs = album.AmountOfSong,
+                AmountOfSongs = album.AmountOfSongs,
                 Artists = await this.GetArtists()
             });
         }
 
-        //TODO Amount of Song
         [HttpPost]
         public async Task<IActionResult> Edit(int id, AlbumFormViewModel model)
         {

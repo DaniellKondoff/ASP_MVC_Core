@@ -5,9 +5,6 @@
 
 <h2>
     @ViewData["Title"]
-    <a class="btn btn-primary" asp-action="Create">
-        Create Artist
-    </a>
 </h2>
 
 @{
@@ -40,7 +37,6 @@
             <th>Name</th>
             <th>Amount of Songs</th>
             <th>Amount of Albums</th>
-            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -48,17 +44,13 @@
         {
             <tr>
                 <td>
-                   @artist.Name
+                    @artist.Name
                 </td>
                 <td>
                     @artist.Songs
                 </td>
                 <td>
                     @artist.Albums
-                </td>
-                <td>
-                    <a class="btn btn-warning" asp-action="Edit" asp-route-id="@artist.Id">Edit</a>
-                    <a class="btn btn-danger" asp-action="Delete" asp-route-id="@artist.Id">Delete</a>
                 </td>
             </tr>
         }

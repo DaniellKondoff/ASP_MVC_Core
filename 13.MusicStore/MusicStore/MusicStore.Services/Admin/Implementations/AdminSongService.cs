@@ -68,6 +68,14 @@ namespace MusicStore.Services.Admin.Implementations
             return true;
         }
 
+        public async Task<AdminSongDetailsServiceModel> DetailsAsync(int id)
+        {
+            return await this.db.Songs
+                .Where(s => s.Id == id)
+                .ProjectTo<AdminSongDetailsServiceModel>()
+                .FirstOrDefaultAsync();
+        }
+
         public async Task EditAsync(int id, string name, decimal price, double duration, int artistId, Ganre ganre)
         {
             var song = await this.db.Songs.FindAsync(id);

@@ -37,6 +37,12 @@
                         <li><a asp-area="Admin" asp-controller="Songs" asp-action="ListAll">Song</a></li>
                         <li><a asp-area="Admin" asp-controller="Albums" asp-action="ListAll">Albums</a></li>
                     }
+                    else
+                    {
+                        <li><a asp-area="" asp-controller="Artists" asp-action="ListAll">Artists</a></li>
+                        <li><a asp-area="" asp-controller="Songs" asp-action="ListAll">Song</a></li>
+                        <li><a asp-area="" asp-controller="Albums" asp-action="ListAll">Albums</a></li>
+                    }
                 </ul>
                 @await Html.PartialAsync("_LoginPartial")
             </div>

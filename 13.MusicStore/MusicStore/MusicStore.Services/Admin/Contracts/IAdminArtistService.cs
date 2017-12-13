@@ -1,7 +1,5 @@
 ﻿using MusicStore.Services.Admin.Models.Artists;
-using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace MusicStore.Services.Admin.Contracts

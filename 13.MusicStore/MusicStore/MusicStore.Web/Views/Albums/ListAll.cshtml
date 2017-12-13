@@ -1,13 +1,10 @@
-﻿@model ArtistListingViewModel
+﻿@model AlbumListingViewModel
 @{
-    ViewData["Title"] = "All Artists";
+    ViewData["Title"] = "All Albums";
 }
 
 <h2>
     @ViewData["Title"]
-    <a class="btn btn-primary" asp-action="Create">
-        Create Artist
-    </a>
 </h2>
 
 @{
@@ -39,26 +36,25 @@
         <tr>
             <th>Name</th>
             <th>Amount of Songs</th>
-            <th>Amount of Albums</th>
-            <th></th>
+            <th>Price</th>
+            <th>Artist</th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var artist in Model.AllArtists)
+        @foreach (var album in Model.AllAlbums)
         {
             <tr>
                 <td>
-                   @artist.Name
+                    <a asp-action="Details" asp-route-id="@album.Id">@album.Title</a>
                 </td>
                 <td>
-                    @artist.Songs
+                    @album.AmountOfSongs
                 </td>
                 <td>
-                    @artist.Albums
+                    $@album.Price
                 </td>
                 <td>
-                    <a class="btn btn-warning" asp-action="Edit" asp-route-id="@artist.Id">Edit</a>
-                    <a class="btn btn-danger" asp-action="Delete" asp-route-id="@artist.Id">Delete</a>
+                    @album.Artist
                 </td>
             </tr>
         }

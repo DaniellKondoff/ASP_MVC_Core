@@ -139,6 +139,18 @@ namespace MusicStore.Web.Areas.Admin.Controllers
 
         }
 
+        public async Task<IActionResult> Details(int id)
+        {
+            var song = await this.songService.DetailsAsync(id);
+
+            if (song == null)
+            {
+                return BadRequest();
+            }
+
+            return View(song);
+        }
+
         private async Task<IEnumerable<SelectListItem>> GetArtists()
         {
             var artists = await this.artistService.AllBasicAsync();
