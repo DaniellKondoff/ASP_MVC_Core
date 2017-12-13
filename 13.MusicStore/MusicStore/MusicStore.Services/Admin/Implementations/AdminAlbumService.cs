@@ -20,6 +20,41 @@ namespace MusicStore.Services.Admin.Implementations
             this.db = db;
         }
 
+        public async Task<bool> AddSongToAlbumAsync(int id, int songId, int artistId)
+        {
+            var album = await this.db.Albums.FindAsync(id);
+            if (album == null)
+            {
+                return false;
+            }
+
+            if (album.Songs.Count() >= album.AmountOfSongs)
+            {
+                return false;
+            }
+
+            var song = await this.db.Songs.FindAsync(songId);
+            if (song == null)
+            {
+                return false;
+            }
+
+            if (album.ArtistId != artistId || song.ArtistId != artistId)
+            {
+                return false;
+            }
+
+            this.db.SongsAlbums.Add(new SongAlbum
+            {
+                AlbumId = album.Id,
+                SongId = song.Id
+            });
+
+           await this.db.SaveChangesAsync();
+
+            return true;
+        }
+
         public async Task CreateAsync(string title, decimal price, int amountOfSongs, int artistId)
         {
             var album = new Album
@@ -88,6 +123,11 @@ namespace MusicStore.Services.Admin.Implementations
                 .Where(a => a.Id == id)
                 .ProjectTo<AdminAlbumEditServiceModel>()
                 .FirstOrDefaultAsync();
+        }
+
+        public async Task<bool> IsSongAddedAsync(int id, int songId)
+        {
+            return await this.db.SongsAlbums.AnyAsync(sa => sa.AlbumId == id && sa.SongId == songId);
         }
 
         public async Task<IEnumerable<AdminAlbumsListingServiceModel>> ListAllAsync(int page = 1)

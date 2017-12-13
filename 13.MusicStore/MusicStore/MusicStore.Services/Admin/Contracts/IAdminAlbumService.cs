@@ -1,7 +1,5 @@
 ﻿using MusicStore.Services.Admin.Models.Albums;
-using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace MusicStore.Services.Admin.Contracts
@@ -25,5 +23,9 @@ namespace MusicStore.Services.Admin.Contracts
         Task<AdminAlbumDetailsServiceModel> DetailsAsync(int id);
 
         Task<int> GetArtistIdByAlbumId(int Id);
+
+        Task<bool> AddSongToAlbumAsync(int id, int songId, int artistId);
+
+        Task<bool> IsSongAddedAsync(int id, int songId);
     }
 }

@@ -84,6 +84,7 @@ namespace MusicStore.Web.Areas.Admin.Controllers
             });
         }
 
+        //TODO Amount of Song
         [HttpPost]
         public async Task<IActionResult> Edit(int id, AlbumFormViewModel model)
         {
@@ -171,23 +172,36 @@ namespace MusicStore.Web.Areas.Admin.Controllers
                 ModelState.AddModelError(nameof(model.Id), "Invalid Album");
             }
 
-            var artist = await this.albumService.GetArtistIdByAlbumId(model.Id);
+            var artistId = await this.albumService.GetArtistIdByAlbumId(model.Id);
 
-            if (album == null)
-            {
-                ModelState.AddModelError(nameof(model.Id), "Invalid Album's Artist");
-            }
-            if (true)
-            {
+            bool IsSongAlreadyAdded = await this.albumService.IsSongAddedAsync(model.Id, model.SongId);
 
+            if (IsSongAlreadyAdded)
+            {
+                ModelState.AddModelError(nameof(model.Id), "That Song already has been added");
             }
+
             if (!ModelState.IsValid)
             {
-                return View();
+                return View(new AlbumAddingSongViewModel
+                {
+                    Id = model.Id,
+                    Title = album.Title,
+                    Songs = await this.GetSongs(artistId)
+                });
             }
 
-            //TODO
-            return null;
+
+            bool success = await this.albumService.AddSongToAlbumAsync(model.Id, model.SongId, artistId);
+
+            if (!success)
+            {
+                return BadRequest();
+            }
+
+            TempData.AddSuccessMessage("You have successfuly add song to Album");
+
+            return RedirectToAction(nameof(Details), new { Id = model.Id });
         }
 
         private async Task<IEnumerable<SelectListItem>> GetArtists()
