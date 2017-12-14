@@ -3,9 +3,6 @@ using LearningSystem.Services.Contracts;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace LearningSystem.Web.Controllers
@@ -35,9 +32,17 @@ namespace LearningSystem.Web.Controllers
         }
 
         [Authorize]
-        public IActionResult DownloadCertificate()
+        public async Task<IActionResult> DownloadCertificate(int id)
         {
-            return View();
+            var userID = this.userManager.GetUserId(User);
+            var certificateContents = await this.userService.GetPdfCertificate(id, userID);
+
+            if (certificateContents == null)
+            {
+                return BadRequest();
+            }
+
+            return File(certificateContents,"application/pdf", "Certificate.pdf");
         }
     }
 }
