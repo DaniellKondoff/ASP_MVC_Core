@@ -27,6 +27,18 @@ namespace MusicStore.Services.Implementations
                 .FirstOrDefaultAsync();
         }
 
+        public async Task<IEnumerable<AlbumsListingServiceModel>> FindAsync(string searchText)
+        {
+            searchText = searchText ?? string.Empty;
+
+            return await this.db
+                .Albums
+                .OrderByDescending(s => s.Id)
+                .Where(s => s.Title.ToLower().Contains(searchText.ToLower()))
+                .ProjectTo<AlbumsListingServiceModel>()
+                .ToListAsync();
+        }
+
         public async Task<IEnumerable<AlbumsListingServiceModel>> ListAllAsync(int page = 1)
         {
             return await this.db

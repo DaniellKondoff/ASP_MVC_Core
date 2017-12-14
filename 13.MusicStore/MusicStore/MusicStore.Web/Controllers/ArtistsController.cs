@@ -9,7 +9,6 @@ using System.Threading.Tasks;
 
 namespace MusicStore.Web.Controllers
 {
-    [Authorize]
     public class ArtistsController : Controller
     {
         private readonly IArtistService artistService;

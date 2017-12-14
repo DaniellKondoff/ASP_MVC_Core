@@ -1,7 +1,5 @@
 ﻿using MusicStore.Services.Models.Songs;
-using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace MusicStore.Services.Contracts
@@ -13,5 +11,7 @@ namespace MusicStore.Services.Contracts
         Task<int> TotalAsync();
 
         Task<SongDetailsServiceModel> DetailsAsync(int id);
+
+        Task<IEnumerable<SongListingServiceModel>> FindAsync(string searchText);
     }
 }

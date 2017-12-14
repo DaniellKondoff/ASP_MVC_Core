@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -9,6 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 using MusicStore.Data;
 using MusicStore.Data.Models;
 using MusicStore.Web.Infrastructure.Extensions;
+using MusicStore.Web.Infrastructure.ShoppingCartIService;
 
 namespace MusicStore.Web
 {
@@ -36,6 +38,12 @@ namespace MusicStore.Web
             })
                 .AddEntityFrameworkStores<MusicStoreDbContext>()
                 .AddDefaultTokenProviders();
+
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddScoped<ShoppingCart>(sp => ShoppingCart.GetCart(sp));
+
+            services.AddMemoryCache();
+            services.AddSession();
 
             services.AddAutoMapper();
 
@@ -67,6 +75,8 @@ namespace MusicStore.Web
             app.UseStaticFiles();
 
             app.UseAuthentication();
+
+            app.UseSession();
 
             app.UseMvc(routes =>
             {

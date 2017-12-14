@@ -9,5 +9,7 @@ namespace MusicStore.Services.Contracts
         Task<IEnumerable<ArtistListingServiceModel>> AllAsync(int page = 1);
 
         Task<int> TotalAsync();
+
+        Task<IEnumerable<ArtistListingServiceModel>> FindAsync(string searchText);
     }
 }

@@ -30,6 +30,18 @@ namespace MusicStore.Services.Implementations
                 .ToListAsync();
         }
 
+        public async Task<IEnumerable<ArtistListingServiceModel>> FindAsync(string searchText)
+        {
+            searchText = searchText ?? string.Empty;
+
+            return await this.db
+                .Artists
+                .OrderByDescending(a => a.Id)
+                .Where(a => a.Name.ToLower().Contains(searchText.ToLower()))
+                .ProjectTo<ArtistListingServiceModel>()
+                .ToListAsync();
+        }
+
         public async Task<int> TotalAsync()
         {
             return await this.db.Artists.CountAsync();

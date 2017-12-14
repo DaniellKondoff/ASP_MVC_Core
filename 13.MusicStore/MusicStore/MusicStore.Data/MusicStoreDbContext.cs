@@ -26,6 +26,7 @@ namespace MusicStore.Data
         {
             builder.ApplyConfiguration(new SongAlbumConfiguration());
             builder.ApplyConfiguration(new ArtistConfiguration());
+            builder.ApplyConfiguration(new ShoppingCartItemConfiguration());
 
             base.OnModelCreating(builder);
         }

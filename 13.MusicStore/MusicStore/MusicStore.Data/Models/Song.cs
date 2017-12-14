@@ -25,5 +25,7 @@ namespace MusicStore.Data.Models
         public Ganre Ganre { get; set; }
 
         public List<SongAlbum> Albums { get; set; } = new List<SongAlbum>();
+
+        public List<ShoppingCartItem> ShoppingCartItems { get; set; } = new List<ShoppingCartItem>();
     }
 }

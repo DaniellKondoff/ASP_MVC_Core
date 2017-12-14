@@ -27,6 +27,11 @@ else
             <li><a asp-controller="Users" asp-action="Profile" asp-route-username="@user.UserName">@user.Name - @user.Courses</a></li>
         }
     </ul>
+
+}
+else
+{
     <h3>No users found.</h3>
+
 }
 
