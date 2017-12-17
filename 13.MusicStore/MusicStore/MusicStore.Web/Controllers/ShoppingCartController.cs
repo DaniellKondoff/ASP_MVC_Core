@@ -1,48 +1,92 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using MusicStore.Data.Models;
 using MusicStore.Services.Contracts;
-using MusicStore.Web.Infrastructure.ShoppingCartIService;
-using MusicStore.Web.Models.ShoppingCartViewModels;
+using MusicStore.Services.Models.Songs;
+using MusicStore.Web.Infrastructure.Extensions;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace MusicStore.Web.Controllers
 {
-    [Authorize]
     public class ShoppingCartController : Controller
     {
-        private readonly ShoppingCart shoppingCart;
+        private readonly IShoppingCartManager shoppingCartManager;
         private readonly ISongService songService;
+        private readonly UserManager<User> userManager;
+        private readonly IShoppingService shoppingService;
 
-        public ShoppingCartController(ShoppingCart shoppingCart, ISongService songService)
+        public ShoppingCartController(
+            IShoppingCartManager shoppingCartManager, 
+            ISongService songService, 
+            UserManager<User> userManager,
+            IShoppingService shoppingService)
         {
-            this.shoppingCart = shoppingCart;
+            this.shoppingCartManager = shoppingCartManager;
             this.songService = songService;
+            this.userManager = userManager;
+            this.shoppingService = shoppingService;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Items()
         {
-            var items = shoppingCart.GetShoppingCartItems();
-            shoppingCart.ShoppingCartItems = items;
+            var shoppingCartId = this.HttpContext.Session.GetShoppingCartId();
 
-            var shoppingCartViewModel = new ShoppingCartViewModel
-            {
-                ShoppingCart = shoppingCart,
-                ShoppingCartTotal = shoppingCart.GetShoppingCartTotal()
-            };
+            var itemsWithDetails = await this.GetCartItemsWithDetails(shoppingCartId);
 
-            return View(shoppingCartViewModel);
+            return View(itemsWithDetails);
         }
 
-        public async Task<IActionResult> AddToShoppingCart(int Id)
+        public IActionResult AddToCart(int id)
         {
-            var song = await this.songService.DetailsAsync(Id);
+            var shoppingCartId = this.HttpContext.Session.GetShoppingCartId();
 
-            if (song != null)
+            this.shoppingCartManager.AddToCart(shoppingCartId, id);
+
+            return RedirectToAction(nameof(Items));
+        }
+
+        [Authorize]
+        public async Task<IActionResult> FinishOrder()
+        {
+            var shoppingCartId = this.HttpContext.Session.GetShoppingCartId();
+
+            var itemsWithDetails = await this.GetCartItemsWithDetails(shoppingCartId);
+            var userId = this.userManager.GetUserId(User);
+
+            await this.shoppingService.CreateOrderAsync(userId, itemsWithDetails);
+
+            this.shoppingCartManager.Clear(shoppingCartId);
+            return RedirectToAction(nameof(HomeController.Index), "Home");
+        }
+
+        public IActionResult RemoveFromCart(int id)
+        {
+            var shoppingCartId = this.HttpContext.Session.GetShoppingCartId();
+
+            this.shoppingCartManager.RemoveFromCart(shoppingCartId, id);
+
+            return RedirectToAction(nameof(Items));
+        }
+
+        private async Task<IEnumerable<SongShoppingDetailsServiceModel>> GetCartItemsWithDetails(string shoppingCartId)
+        {
+            var items = this.shoppingCartManager.GetItems(shoppingCartId);
+            var itemIds = items.Select(i => i.SongId);
+
+            var itemQuantities = items.ToDictionary(i => i.SongId, i => i.Quantity);
+
+
+            var itemsWithDetails = await this.songService.SongShoppingDetails(itemIds);
+
+            foreach (var item in itemsWithDetails)
             {
-                shoppingCart.AddToCart(song.Id, 1);
+                item.Quantity = itemQuantities[item.Id];
             }
 
-            return RedirectToAction(nameof(Index));
+            return itemsWithDetails;
         }
     }
 }

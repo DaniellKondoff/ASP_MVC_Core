@@ -42,10 +42,7 @@
                         <li><a asp-area="" asp-controller="Artists" asp-action="ListAll">Artists</a></li>
                         <li><a asp-area="" asp-controller="Songs" asp-action="ListAll">Song</a></li>
                         <li><a asp-area="" asp-controller="Albums" asp-action="ListAll">Albums</a></li>
-                        @if (User.Identity.IsAuthenticated)
-                        {
-                            @await Component.InvokeAsync("ShoppingCartSummary")
-                        }
+                        @await Component.InvokeAsync("ShoppingCartSummary")
 
                     }
                 </ul>

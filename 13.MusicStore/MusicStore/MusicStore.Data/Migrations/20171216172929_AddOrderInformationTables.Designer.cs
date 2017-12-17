@@ -12,9 +12,10 @@ using System;
 namespace MusicStore.Data.Migrations
 {
     [DbContext(typeof(MusicStoreDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20171216172929_AddOrderInformationTables")]
+    partial class AddOrderInformationTables
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

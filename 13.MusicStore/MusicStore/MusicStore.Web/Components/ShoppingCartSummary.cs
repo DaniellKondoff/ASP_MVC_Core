@@ -1,31 +1,28 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using MusicStore.Web.Infrastructure.ShoppingCartIService;
-using MusicStore.Web.Models.ShoppingCartViewModels;
+using MusicStore.Services.Contracts;
+using MusicStore.Web.Infrastructure.Extensions;
+using System.Linq;
 
 namespace MusicStore.Web.Components
 {
     public class ShoppingCartSummary : ViewComponent
     {
-        private readonly ShoppingCart shoppingCart;
+        private readonly IShoppingCartManager shoppingCartManager;
 
-        public ShoppingCartSummary(ShoppingCart shoppingCart)
+        public ShoppingCartSummary(IShoppingCartManager shoppingCartManager)
         {
-            this.shoppingCart = shoppingCart;
+            this.shoppingCartManager = shoppingCartManager;
         }
 
         public IViewComponentResult Invoke()
         {
-            var items = shoppingCart.GetShoppingCartItems();
-            //var items = new List<ShoppingCartItem>() { new ShoppingCartItem(), new ShoppingCartItem() };
-            shoppingCart.ShoppingCartItems = items;
+            var shoppingCartId = this.HttpContext.Session.GetShoppingCartId();
 
-            var shoppingCartViewModel = new ShoppingCartViewModel
-            {
-                ShoppingCart = shoppingCart,
-                ShoppingCartTotal = shoppingCart.GetShoppingCartTotal()
-            };
+            var items = this.shoppingCartManager.GetItems(shoppingCartId);
 
-            return View(shoppingCartViewModel);
+            var quantity = items.Sum(i => i.Quantity);
+
+            return View(quantity);
         }
     }
 }

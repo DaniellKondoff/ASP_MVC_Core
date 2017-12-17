@@ -36,6 +36,7 @@
         <tr>
             <th>Name</th>
             <th>Artist</th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -47,6 +48,9 @@
                 </td>
                 <td>
                     @song.Artist
+                </td>
+                <td>
+                <a class="btn btn-primary" asp-controller="ShoppingCart" asp-action="AddToCart" asp-route-id="@song.Id">Buy</a>
                 </td>
             </tr>
         }

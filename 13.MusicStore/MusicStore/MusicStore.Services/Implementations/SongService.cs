@@ -3,7 +3,6 @@ using Microsoft.EntityFrameworkCore;
 using MusicStore.Data;
 using MusicStore.Services.Contracts;
 using MusicStore.Services.Models.Songs;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -48,6 +47,15 @@ namespace MusicStore.Services.Implementations
                 .OrderByDescending(s => s.Id)
                 .Where(s => s.Name.ToLower().Contains(searchText.ToLower()))
                 .ProjectTo<SongListingServiceModel>()
+                .ToListAsync();
+        }
+
+        public async Task<IEnumerable<SongShoppingDetailsServiceModel>> SongShoppingDetails(IEnumerable<int> itemIds)
+        {
+            return await this.db
+                .Songs
+                .Where(s => itemIds.Contains(s.Id))
+                .ProjectTo<SongShoppingDetailsServiceModel>()
                 .ToListAsync();
         }
 

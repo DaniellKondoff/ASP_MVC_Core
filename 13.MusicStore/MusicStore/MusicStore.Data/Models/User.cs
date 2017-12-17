@@ -1,11 +1,12 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using static MusicStore.Data.DataConstants;
 
 namespace MusicStore.Data.Models
 {
-   
+
     public class User : IdentityUser
     {
         [Required]
@@ -19,5 +20,7 @@ namespace MusicStore.Data.Models
         public string LastName { get; set; }
 
         public DateTime BirthDate { get; set; }
+
+        public ICollection<Order> Orders { get; set; } = new List<Order>();
     }
 }

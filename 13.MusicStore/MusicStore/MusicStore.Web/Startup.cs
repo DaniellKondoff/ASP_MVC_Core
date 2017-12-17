@@ -9,8 +9,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using MusicStore.Data;
 using MusicStore.Data.Models;
+using MusicStore.Services.Contracts;
+using MusicStore.Services.Implementations;
 using MusicStore.Web.Infrastructure.Extensions;
-using MusicStore.Web.Infrastructure.ShoppingCartIService;
 
 namespace MusicStore.Web
 {
@@ -39,15 +40,13 @@ namespace MusicStore.Web
                 .AddEntityFrameworkStores<MusicStoreDbContext>()
                 .AddDefaultTokenProviders();
 
-            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-            services.AddScoped<ShoppingCart>(sp => ShoppingCart.GetCart(sp));
-
             services.AddMemoryCache();
             services.AddSession();
 
             services.AddAutoMapper();
 
             services.AddDomainServices();
+            services.AddSingleton<IShoppingCartManager, ShoppingCartManager>();
 
             services.AddRouting(routing => routing.LowercaseUrls = true);
 
