@@ -12,6 +12,7 @@
     using Microsoft.AspNetCore.Mvc;
     using LearningSystem.Services.Contracts;
     using LearningSystem.Services.Models;
+    using LearningSystem.Test.Mocks;
 
     public class UserControllerTest
     {
@@ -34,7 +35,7 @@
         public async Task ProfileShouldReturnNotFoundWithInvalidUserName()
         {
             //Arrenge
-            var userManager = this.GetUserManagerMock();
+            var userManager = UserManagerMock.New();
 
             var controller = new UsersController(null, userManager.Object);
 
@@ -54,7 +55,7 @@
             const string userId = "SomeId";
             const string userName = "SomeUsername";
 
-            var userManager = this.GetUserManagerMock();
+            var userManager = UserManagerMock.New();
 
             userManager
                 .Setup(u => u.FindByNameAsync(It.IsAny<string>()))
@@ -82,10 +83,5 @@
                 
         }
 
-        private Mock<UserManager<User>> GetUserManagerMock()
-        {
-            return new Mock<UserManager<User>>(
-                Mock.Of<IUserStore<User>>(), null, null, null, null, null, null, null, null);
-        }
     }
 }
