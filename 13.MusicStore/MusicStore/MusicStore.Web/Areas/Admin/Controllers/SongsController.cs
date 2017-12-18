@@ -57,6 +57,8 @@ namespace MusicStore.Web.Areas.Admin.Controllers
 
             await this.songService.CreateAsync(model.Name, model.Price, model.Duration, model.ArtistId, model.Ganre);
 
+            TempData.AddSuccessMessage($"The song {model.Name} has been added successfully");
+
             return RedirectToAction(nameof(ListAll));
         }
 
@@ -141,8 +143,8 @@ namespace MusicStore.Web.Areas.Admin.Controllers
             {
                 TempData.AddSuccessMessage("Song has been deleted successfully");
             }
-            return RedirectToAction(nameof(ListAll));
 
+            return RedirectToAction(nameof(ListAll));
         }
 
         public async Task<IActionResult> Details(int id)
