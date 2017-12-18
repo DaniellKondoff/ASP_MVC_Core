@@ -1,11 +1,14 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using MusicStore.Data.Enums;
 using MusicStore.Services.Admin.Contracts;
 using MusicStore.Web.Areas.Admin.Models.Albums;
 using MusicStore.Web.Infrastructure.Extensions;
+using MusicStore.Web.Infrastructure.Filters;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using static MusicStore.Web.Infrastructure.Common.WebConstants;
 
 namespace MusicStore.Web.Areas.Admin.Controllers
 {
@@ -31,6 +34,7 @@ namespace MusicStore.Web.Areas.Admin.Controllers
         }
 
         [HttpPost]
+        [Log(Operation.Add,AlbumTable)]
         public async Task<IActionResult> Add(AlbumFormViewModel model)
         {
             var isArtistExisting = await this.artistService.ExistAsync(model.ArtistId);
@@ -85,6 +89,7 @@ namespace MusicStore.Web.Areas.Admin.Controllers
         }
 
         [HttpPost]
+        [Log(Operation.Edit, AlbumTable)]
         public async Task<IActionResult> Edit(int id, AlbumFormViewModel model)
         {
             var IsExisting = await this.albumService.ExistAsync(id);
@@ -115,6 +120,7 @@ namespace MusicStore.Web.Areas.Admin.Controllers
             return View(Id);
         }
 
+        [Log(Operation.Delete, AlbumTable)]
         public async Task<IActionResult> Destroy(int id)
         {
             var success = await this.albumService.DeleteAsync(id);

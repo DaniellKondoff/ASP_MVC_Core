@@ -10,5 +10,10 @@
         public const string TempDataErrorMessageKey = "ErrorMessage";
 
         public const string AdminArea = "Admin";
+
+        public const string SongTable = "SongTable";
+        public const string AlbumTable = "AlbumTable";
+        public const string ArtistTable = "ArtistTable";
+
     }
 }

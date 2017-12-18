@@ -1,9 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using MusicStore.Data.Enums;
 using MusicStore.Services.Admin.Contracts;
 using MusicStore.Web.Areas.Admin.Models.Artists;
 using MusicStore.Web.Infrastructure.Extensions;
 using MusicStore.Web.Infrastructure.Filters;
 using System.Threading.Tasks;
+using static MusicStore.Web.Infrastructure.Common.WebConstants;
 
 namespace MusicStore.Web.Areas.Admin.Controllers
 {
@@ -35,6 +37,7 @@ namespace MusicStore.Web.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateModelState]
+        [Log(Operation.Add, ArtistTable)]
         public async Task<IActionResult> Create(ArtistFormViewModel model)
         {
             await this.artistService.CreateAsync(model.Name);
@@ -60,6 +63,7 @@ namespace MusicStore.Web.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateModelState]
+        [Log(Operation.Edit, ArtistTable)]
         public async Task<IActionResult> Edit(int id, ArtistFormViewModel model)
         {
             var success = await this.artistService.EditAsync(id, model.Name);
@@ -80,6 +84,7 @@ namespace MusicStore.Web.Areas.Admin.Controllers
             return View(id);
         }
 
+        [Log(Operation.Delete, ArtistTable)]
         public async Task<IActionResult> Destroy(int id)
         {
             var success = await this.artistService.DeleteAsync(id);
