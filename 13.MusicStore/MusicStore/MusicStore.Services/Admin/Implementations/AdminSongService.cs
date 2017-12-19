@@ -33,6 +33,7 @@ namespace MusicStore.Services.Admin.Implementations
         public async Task<IEnumerable<AdminSongBaseServiceModel>> AllBasicAsync(int id)
         {
             return await this.db.Songs
+                .OrderByDescending(s => s.Id)
                 .Where(s => s.ArtistId == id)
                 .ProjectTo<AdminSongBaseServiceModel>()
                 .ToListAsync();
@@ -79,6 +80,11 @@ namespace MusicStore.Services.Admin.Implementations
         public async Task EditAsync(int id, string name, decimal price, double duration, int artistId, Ganre ganre)
         {
             var song = await this.db.Songs.FindAsync(id);
+
+            if (song == null)
+            {
+                return;
+            }
 
             song.Name = name;
             song.Price = price;
