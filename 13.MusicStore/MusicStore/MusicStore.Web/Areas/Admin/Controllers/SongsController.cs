@@ -27,7 +27,7 @@ namespace MusicStore.Web.Areas.Admin.Controllers
         {
             return View(new SongFormViewModel
             {
-               Artists =await this.GetArtists()
+                Artists = await this.GetArtists()
             });
         }
 
@@ -35,7 +35,9 @@ namespace MusicStore.Web.Areas.Admin.Controllers
         [Log(Operation.Add, SongTable)]
         public async Task<IActionResult> Add(SongFormViewModel model)
         {
-            if (model.Ganre < 0)
+            var IsGanreExist = this.songService.IsGanreExist((int)model.Ganre);
+
+            if (!IsGanreExist)
             {
                 ModelState.AddModelError(nameof(model.Ganre), "Please select at least one Ganre");
             }
@@ -103,9 +105,18 @@ namespace MusicStore.Web.Areas.Admin.Controllers
                 ModelState.AddModelError(nameof(id), "Invalid Song");
             }
 
-            if (model.Ganre < 0)
+            var IsGanreExist = this.songService.IsGanreExist((int)model.Ganre);
+
+            if (!IsGanreExist)
             {
                 ModelState.AddModelError(nameof(model.Ganre), "Please select at least one Ganre");
+            }
+
+            var isArtistExisting = await this.artistService.ExistAsync(model.ArtistId);
+
+            if (!isArtistExisting)
+            {
+                ModelState.AddModelError(nameof(model.ArtistId), "Please select valid Artist");
             }
 
             if (!ModelState.IsValid)

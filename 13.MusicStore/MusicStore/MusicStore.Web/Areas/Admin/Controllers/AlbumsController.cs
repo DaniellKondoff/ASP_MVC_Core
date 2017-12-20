@@ -99,6 +99,13 @@ namespace MusicStore.Web.Areas.Admin.Controllers
                 ModelState.AddModelError(nameof(id), "There is no such albums");
             }
 
+            var IsArtistExisting = await this.artistService.ExistAsync(model.ArtistId);
+
+            if (!IsArtistExisting)
+            {
+                ModelState.AddModelError(nameof(model.ArtistId), "Please select valid Artist");
+            }
+
             if (!ModelState.IsValid)
             {
                 return View(new AlbumFormViewModel

@@ -90,7 +90,8 @@ namespace MusicStore.Tests.Web.Areas.Admin.Controllers
         {
             //Arrenge
             var adminArtistService = this.GetAdminArtistServiceMock();
-            var controller = new SongsController(adminArtistService.Object, null);
+            var adminSongService = this.GetAdminSongServiceBaseMock();
+            var controller = new SongsController(adminArtistService.Object, adminSongService.Object);
             controller.ModelState.AddModelError(string.Empty, "Error");
 
             //Act
@@ -142,11 +143,16 @@ namespace MusicStore.Tests.Web.Areas.Admin.Controllers
                 })
                 .Returns(Task.CompletedTask);
 
+            adminSongService
+                .Setup(a => a.IsGanreExist(It.IsAny<int>()))
+                .Returns(true);
+
             var adminArtistService = new Mock<IAdminArtistService>();
 
             adminArtistService
                 .Setup(a => a.ExistAsync(It.IsAny<int>()))
                 .ReturnsAsync(true);
+
 
             var tempDate = new Mock<ITempDataDictionary>();
             tempDate.SetupSet(t => t[WebConstants.TempDataSuccessMessageKey] = It.IsAny<string>())
@@ -330,6 +336,10 @@ namespace MusicStore.Tests.Web.Areas.Admin.Controllers
             adminSongService.Setup(s => s.ExistAsync(It.IsAny<int>()))
                 .ReturnsAsync(true);
 
+            var adminArtistService = this.GetAdminArtistServiceMock();
+            adminArtistService.Setup(a => a.ExistAsync(It.IsAny<int>()))
+                .ReturnsAsync(true);
+
             adminSongService.Setup(s => s.EditAsync(
                 It.IsAny<int>(),
                 It.IsAny<string>(),
@@ -349,11 +359,15 @@ namespace MusicStore.Tests.Web.Areas.Admin.Controllers
                 })
                 .Returns(Task.CompletedTask);
 
+            adminSongService
+                .Setup(a => a.IsGanreExist(It.IsAny<int>()))
+                .Returns(true);
+
             var tempDate = new Mock<ITempDataDictionary>();
             tempDate.SetupSet(t => t[WebConstants.TempDataSuccessMessageKey] = It.IsAny<string>())
                 .Callback((string key, object message) => successMessage = message as string);
 
-            var controller = new SongsController(null, adminSongService.Object);
+            var controller = new SongsController(adminArtistService.Object, adminSongService.Object);
             controller.TempData = tempDate.Object;
 
             //Act

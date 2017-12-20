@@ -4,6 +4,7 @@ using MusicStore.Data;
 using MusicStore.Data.Models;
 using MusicStore.Services.Admin.Contracts;
 using MusicStore.Services.Admin.Models.Songs;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -113,6 +114,13 @@ namespace MusicStore.Services.Admin.Implementations
         public async Task<int> TotalAsync()
         {
             return await this.db.Songs.CountAsync();
+        }
+
+        public bool IsGanreExist(int ganreValueId)
+        {
+            var ganresCount =  Enum.GetValues(typeof(Ganre)).Length;
+
+            return ganreValueId >= 0 && ganreValueId < ganresCount;
         }
     }
 }

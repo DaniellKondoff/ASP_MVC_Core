@@ -24,5 +24,7 @@ namespace MusicStore.Services.Admin.Contracts
         Task<IEnumerable<AdminSongBaseServiceModel>> AllBasicAsync(int id);
 
         Task<AdminSongDetailsServiceModel> DetailsAsync(int id);
+
+        bool IsGanreExist(int ganreValueId);
     }
 }
