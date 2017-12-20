@@ -13,5 +13,7 @@ namespace MusicStore.Services.Contracts
         Task<AlbumDetailsServiceModel> DetailsAsync(int id);
 
         Task<IEnumerable<AlbumsListingServiceModel>> FindAsync(string searchText);
+
+        Task<IEnumerable<AlbumShoppingDetailsServiceModels>> AlbumsShoppingDetails(IEnumerable<int> itemAlbumsIds);
     }
 }

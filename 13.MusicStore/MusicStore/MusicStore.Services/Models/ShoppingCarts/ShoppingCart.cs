@@ -12,15 +12,16 @@ namespace MusicStore.Services.Models.ShoppingCarts
             this.items = new List<CartItem>();
         }
 
-        public void AddToCart(int songId)
+        public void AddToCart(int productId, string title)
         {
-            var cartItem = this.items.FirstOrDefault(s => s.SongId == songId);
+            var cartItem = this.items.FirstOrDefault(i => i.ProductId == productId && i.Title == title);
 
             if (cartItem == null)
             {
                 cartItem = new CartItem
                 {
-                    SongId = songId,
+                    ProductId = productId,
+                    Title = title,
                     Quantity = 1
                 };
 
@@ -33,10 +34,10 @@ namespace MusicStore.Services.Models.ShoppingCarts
 
         }
 
-        public void RemoveFromCart(int songId)
+        public void RemoveFromCart(int productId, string title)
         {
             var cartItem = this.items
-                .FirstOrDefault(i => i.SongId == songId);
+                .FirstOrDefault(i => i.ProductId == productId && i.Title.ToLower().Contains(title.ToLower()));
 
             if (cartItem != null)
             {

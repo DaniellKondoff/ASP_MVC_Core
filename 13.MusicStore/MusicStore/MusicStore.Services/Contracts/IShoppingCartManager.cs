@@ -5,9 +5,9 @@ namespace MusicStore.Services.Contracts
 {
     public interface IShoppingCartManager
     {
-        void AddToCart(string id,  int songId);
+        void AddToCart(string id,  int productId, string title);
 
-        void RemoveFromCart(string id, int songId);
+        void RemoveFromCart(string id, int productId, string title);
 
         IEnumerable<CartItem> GetItems(string id);
 

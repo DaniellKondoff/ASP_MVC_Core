@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace MusicStore.Web.Models.ShoppingCartViewModels
+﻿namespace MusicStore.Web.Models.ShoppingCartViewModels
 {
     public class CartItemViewModel
     {

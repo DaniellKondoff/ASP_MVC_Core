@@ -4,10 +4,13 @@ using Microsoft.AspNetCore.Mvc;
 using MusicStore.Data.Models;
 using MusicStore.Services.Contracts;
 using MusicStore.Services.Models.Songs;
+using MusicStore.Services.Models.Albums;
 using MusicStore.Web.Infrastructure.Extensions;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using MusicStore.Web.Models.ShoppingCartViewModels;
+using static MusicStore.Web.Infrastructure.Common.WebConstants;
 
 namespace MusicStore.Web.Controllers
 {
@@ -17,33 +20,40 @@ namespace MusicStore.Web.Controllers
         private readonly ISongService songService;
         private readonly UserManager<User> userManager;
         private readonly IShoppingService shoppingService;
+        private readonly IAlbumService albumsService;
 
         public ShoppingCartController(
             IShoppingCartManager shoppingCartManager, 
             ISongService songService, 
             UserManager<User> userManager,
-            IShoppingService shoppingService)
+            IShoppingService shoppingService,
+            IAlbumService albumsService)
         {
             this.shoppingCartManager = shoppingCartManager;
             this.songService = songService;
             this.userManager = userManager;
             this.shoppingService = shoppingService;
+            this.albumsService = albumsService;
         }
 
         public async Task<IActionResult> Items()
         {
             var shoppingCartId = this.HttpContext.Session.GetShoppingCartId();
 
-            var itemsWithDetails = await this.GetCartItemsWithDetails(shoppingCartId);
+            var carItemsWithDetails = new CartItemsViewModel
+            {
+                ShoppingSongs = await this.GetSongCartItemsWithDetails(shoppingCartId),
+                ShoppingAlbums = await this.GetAlbumCartItemsWithDetails(shoppingCartId)
+            };
 
-            return View(itemsWithDetails);
+            return View(carItemsWithDetails);
         }
 
-        public IActionResult AddToCart(int id)
+        public IActionResult AddToCart(int id, string name)
         {
             var shoppingCartId = this.HttpContext.Session.GetShoppingCartId();
 
-            this.shoppingCartManager.AddToCart(shoppingCartId, id);
+            this.shoppingCartManager.AddToCart(shoppingCartId, id, name);
 
             return RedirectToAction(nameof(Items));
         }
@@ -53,7 +63,7 @@ namespace MusicStore.Web.Controllers
         {
             var shoppingCartId = this.HttpContext.Session.GetShoppingCartId();
 
-            var itemsWithDetails = await this.GetCartItemsWithDetails(shoppingCartId);
+            var itemsWithDetails = await this.GetSongCartItemsWithDetails(shoppingCartId);
             var userId = this.userManager.GetUserId(User);
 
             await this.shoppingService.CreateOrderAsync(userId, itemsWithDetails);
@@ -62,31 +72,43 @@ namespace MusicStore.Web.Controllers
             return RedirectToAction(nameof(HomeController.Index), "Home");
         }
 
-        public IActionResult RemoveFromCart(int id)
+        public IActionResult RemoveFromCart(int id, string name)
         {
             var shoppingCartId = this.HttpContext.Session.GetShoppingCartId();
 
-            this.shoppingCartManager.RemoveFromCart(shoppingCartId, id);
+            this.shoppingCartManager.RemoveFromCart(shoppingCartId, id, name);
 
             return RedirectToAction(nameof(Items));
         }
 
-        private async Task<IEnumerable<SongShoppingDetailsServiceModel>> GetCartItemsWithDetails(string shoppingCartId)
+        private async Task<IEnumerable<SongShoppingDetailsServiceModel>> GetSongCartItemsWithDetails(string shoppingCartId)
         {
             var items = this.shoppingCartManager.GetItems(shoppingCartId);
-            var itemIds = items.Select(i => i.SongId);
 
-            var itemQuantities = items.ToDictionary(i => i.SongId, i => i.Quantity);
+            var itemSongIds = items.Where(i=>i.Title.EndsWith(SongShopping)).Select(i => i.ProductId);
+            
+            var itemSongQuantities = items.Where(i => i.Title.EndsWith(SongShopping)).ToDictionary(i => i.ProductId, i => i.Quantity);
+           
+            var itemsSongsWithDetails = await this.songService.SongShoppingDetails(itemSongIds);
 
+            itemsSongsWithDetails.ToList().ForEach(i => i.Quantity = itemSongQuantities[i.Id]);
 
-            var itemsWithDetails = await this.songService.SongShoppingDetails(itemIds);
+            return itemsSongsWithDetails;
+        }
 
-            foreach (var item in itemsWithDetails)
-            {
-                item.Quantity = itemQuantities[item.Id];
-            }
+        private async Task<IEnumerable<AlbumShoppingDetailsServiceModels>> GetAlbumCartItemsWithDetails(string shoppingCartId)
+        {
+            var items = this.shoppingCartManager.GetItems(shoppingCartId);
 
-            return itemsWithDetails;
+            var itemAlbumIds = items.Where(i => i.Title.EndsWith(AlbumShopping)).Select(i => i.ProductId);
+
+            var itemAlbumQuantities = items.Where(i => i.Title.EndsWith(AlbumShopping)).ToDictionary(i => i.ProductId, i => i.Quantity);
+
+            var itemsAlbumsWithDetails = await this.albumsService.AlbumsShoppingDetails(itemAlbumIds);
+
+            itemsAlbumsWithDetails.ToList().ForEach(i => i.Quantity = itemAlbumQuantities[i.Id]);
+
+            return itemsAlbumsWithDetails;
         }
     }
 }

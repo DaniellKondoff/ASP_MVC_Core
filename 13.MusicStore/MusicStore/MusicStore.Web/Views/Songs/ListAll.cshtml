@@ -50,7 +50,10 @@
                     @song.Artist
                 </td>
                 <td>
-                <a class="btn btn-primary" asp-controller="ShoppingCart" asp-action="AddToCart" asp-route-id="@song.Id">Buy</a>
+                    @{
+                        var routeName = song.Name + "Song";
+                    }
+                <a class="btn btn-primary" asp-controller="ShoppingCart" asp-action="AddToCart" asp-route-id="@song.Id" asp-route-name="@routeName">Buy</a>
                 </td>
             </tr>
         }

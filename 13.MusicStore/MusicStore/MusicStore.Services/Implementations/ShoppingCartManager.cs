@@ -14,11 +14,11 @@ namespace MusicStore.Services.Implementations
             this.cart = new ConcurrentDictionary<string, ShoppingCart>();
         }
 
-        public void AddToCart(string id, int songId)
+        public void AddToCart(string id, int productId, string title)
         {
             var shoppingCart = this.GetShoppingCart(id);
 
-            shoppingCart.AddToCart(songId);
+            shoppingCart.AddToCart(productId, title);
         }
 
         public void Clear(string id)
@@ -33,11 +33,11 @@ namespace MusicStore.Services.Implementations
             return new List<CartItem>(shoppingCart.Items);
         }
 
-        public void RemoveFromCart(string id, int songId)
+        public void RemoveFromCart(string id, int productId, string title)
         {
             var shoppingCart = this.GetShoppingCart(id);
 
-            shoppingCart.RemoveFromCart(songId);
+            shoppingCart.RemoveFromCart(productId, title);
         }
 
         private ShoppingCart GetShoppingCart(string id)

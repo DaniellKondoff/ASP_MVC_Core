@@ -38,6 +38,7 @@
             <th>Amount of Songs</th>
             <th>Price</th>
             <th>Artist</th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -55,6 +56,12 @@
                 </td>
                 <td>
                     @album.Artist
+                </td>
+                <td>
+                    @{ 
+                        var routeName = album.Title + "Album";
+                    }
+                    <a class="btn btn-primary" asp-controller="ShoppingCart" asp-action="AddToCart" asp-route-id="@album.Id" asp-route-name="@routeName">Buy</a>
                 </td>
             </tr>
         }

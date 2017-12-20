@@ -15,5 +15,8 @@
         public const string AlbumTable = "AlbumTable";
         public const string ArtistTable = "ArtistTable";
 
+        public const string SongShopping = "Song";
+        public const string AlbumShopping = "Album";
+
     }
 }

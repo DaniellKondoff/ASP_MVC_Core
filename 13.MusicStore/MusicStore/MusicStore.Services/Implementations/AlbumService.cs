@@ -19,6 +19,15 @@ namespace MusicStore.Services.Implementations
             this.db = db;
         }
 
+        public async Task<IEnumerable<AlbumShoppingDetailsServiceModels>> AlbumsShoppingDetails(IEnumerable<int> itemAlbumsIds)
+        {
+            return await this.db
+               .Albums
+               .Where(s => itemAlbumsIds.Contains(s.Id))
+               .ProjectTo<AlbumShoppingDetailsServiceModels>()
+               .ToListAsync();
+        }
+
         public async Task<AlbumDetailsServiceModel> DetailsAsync(int id)
         {
             return await this.db.Albums
