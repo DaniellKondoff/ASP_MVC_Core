@@ -13,5 +13,6 @@ namespace MusicStore.Data.Models
         public decimal TotalPrice { get; set; }
 
         public ICollection<OrderItem> Items { get; set; } = new List<OrderItem>();
+        public ICollection<OrderItemAlbum> ItemsAlbums { get; set; } = new List<OrderItemAlbum>();
     }
 }

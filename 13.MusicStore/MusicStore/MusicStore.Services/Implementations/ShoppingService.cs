@@ -1,6 +1,7 @@
 ﻿using MusicStore.Data;
 using MusicStore.Data.Models;
 using MusicStore.Services.Contracts;
+using MusicStore.Services.Models.Albums;
 using MusicStore.Services.Models.Songs;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,21 +18,31 @@ namespace MusicStore.Services.Implementations
             this.db = db;
         }
 
-        public async Task CreateOrderAsync(string userId, IEnumerable<SongShoppingDetailsServiceModel> itemsWithDetails)
+        public async Task CreateOrderAsync(string userId, IEnumerable<SongShoppingDetailsServiceModel> itemsWithDetails, IEnumerable<AlbumShoppingDetailsServiceModels> itemsAlbumsWithDetails)
         {
             var order = new Order
             {
                 UserId = userId,
-                TotalPrice = itemsWithDetails.Sum(i => i.Price * i.Quantity)
+                TotalPrice = (itemsWithDetails.Sum(i => i.Price * i.Quantity) + itemsAlbumsWithDetails.Sum(a=>a.Price * a.Quantity))
             };
 
-            foreach (var item in itemsWithDetails)
+            foreach (var songItem in itemsWithDetails)
             {
                 order.Items.Add(new OrderItem
                 {
-                    SongId = item.Id,
-                    SongPrice = item.Price,
-                    Quantity = item.Quantity
+                    SongId = songItem.Id,
+                    SongPrice = songItem.Price,
+                    Quantity = songItem.Quantity
+                });
+            }
+
+            foreach (var albumItem in itemsAlbumsWithDetails)
+            {
+                order.ItemsAlbums.Add(new OrderItemAlbum
+                {
+                    AlbumId = albumItem.Id,
+                    AlbumPrice = albumItem.Price,
+                    Quantity = albumItem.Quantity
                 });
             }
 

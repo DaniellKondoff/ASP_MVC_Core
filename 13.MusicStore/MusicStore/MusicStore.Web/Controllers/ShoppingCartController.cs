@@ -63,10 +63,12 @@ namespace MusicStore.Web.Controllers
         {
             var shoppingCartId = this.HttpContext.Session.GetShoppingCartId();
 
-            var itemsWithDetails = await this.GetSongCartItemsWithDetails(shoppingCartId);
+            var itemsSongsWithDetails = await this.GetSongCartItemsWithDetails(shoppingCartId);
+            var itemsAlbumsWithDetails = await this.GetAlbumCartItemsWithDetails(shoppingCartId);
+
             var userId = this.userManager.GetUserId(User);
 
-            await this.shoppingService.CreateOrderAsync(userId, itemsWithDetails);
+            await this.shoppingService.CreateOrderAsync(userId, itemsSongsWithDetails, itemsAlbumsWithDetails);
 
             this.shoppingCartManager.Clear(shoppingCartId);
             return RedirectToAction(nameof(HomeController.Index), "Home");

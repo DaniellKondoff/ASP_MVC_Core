@@ -18,6 +18,9 @@ namespace MusicStore.Data
         public DbSet<Order> Orders { get; set; }
 
         public DbSet<OrderItem> OrderItems { get; set; }
+
+        public DbSet<OrderItemAlbum> OrderItemsAlbums { get; set; }
+
         public DbSet<Log> Logs { get; set; }
 
         public MusicStoreDbContext(DbContextOptions<MusicStoreDbContext> options)

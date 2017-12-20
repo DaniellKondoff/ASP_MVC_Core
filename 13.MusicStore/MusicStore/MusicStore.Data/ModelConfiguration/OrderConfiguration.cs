@@ -17,6 +17,12 @@ namespace MusicStore.Data.ModelConfiguration
                 .HasMany(o => o.Items)
                 .WithOne(i => i.Order)
                 .HasForeignKey(i => i.OrderId);
+
+
+            builder
+                .HasMany(o => o.ItemsAlbums)
+                .WithOne(i => i.Order)
+                .HasForeignKey(i => i.OrderId);
         }
     }
 }
